@@ -22,13 +22,14 @@ from pathlib import Path
 
 
 class Language(NamedTuple):
-    letters: Set[str]
-    vowels: Set[str]
-    substitutions: Set[Tuple[str, str]]
-    excluded: Set[str]
+    letters: set[str]
+    vowels: set[str]
+    substitutions: set[tuple[str, str]]
     wordlist: Path
+    name: str
 
-Language(
+italian = Language(
+    name='Italiano',
     letters=set('abcdefghilmnopqrstuvz'),
     vowels=set('aeiou'),
     substitutions={
@@ -39,7 +40,6 @@ Language(
         ('ò', 'o'),
         ('ù', 'u'),
     },
-    excluded=set('\''),
     wordlist=Path('/usr/share/dict/italian'),
 )
 
