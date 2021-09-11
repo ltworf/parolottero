@@ -16,6 +16,7 @@
 #
 # author Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
 
+from sys import argv, exit
 from math import log
 from typing import NamedTuple, Iterable
 from pathlib import Path
@@ -27,21 +28,6 @@ class Language(NamedTuple):
     substitutions: set[tuple[str, str]]
     wordlist: Path
     name: str
-
-italian = Language(
-    name='Italiano',
-    letters=set('abcdefghilmnopqrstuvz'),
-    vowels=set('aeiou'),
-    substitutions={
-        ('à', 'a'),
-        ('è', 'e'),
-        ('é', 'e'),
-        ('ì', 'i'),
-        ('ò', 'o'),
-        ('ù', 'u'),
-    },
-    wordlist=Path('/usr/share/dict/italian'),
-)
 
 
 def scan_language(language: Language) -> set[str]:
@@ -111,9 +97,13 @@ def letter_score(freqs: list[str]) -> list[tuple[str, int]]:
     return r
 
 
-def gen_language(language: Language) -> None:
+def gen_language(language: Language, dest: Path, wordlist: Path) -> None:
+    '''
+    Generates the language file data and writes it to
+    dest
+    '''
     print(f'Generating language file for {language.name}')
-    words = scan_language(italian)
+    words = scan_language(language)
     print(f'Language has {len(words)} words')
     frequencies = letter_frequency(words)
 
@@ -122,3 +112,60 @@ def gen_language(language: Language) -> None:
     scores = letter_score([i[0] for i in frequencies])
 
     print_letterlist(scores, 'Scores')
+
+    with dest.open('wt') as f:
+        print(language.name, file=f)
+        for letter, score in scores:
+            vowel = 'v' if letter in language.vowels else ''
+            print(f'{letter} {score} {vowel}', file=f)
+    with wordlist.open('wt') as f:
+        for word in words:
+            print(word, file=f)
+
+
+languages = {
+    'italian': Language(
+        name='Italiano',
+        letters=set('abcdefghilmnopqrstuvz'),
+        vowels=set('aeiou'),
+        substitutions={
+            ('à', 'a'),
+            ('è', 'e'),
+            ('é', 'e'),
+            ('ì', 'i'),
+            ('ò', 'o'),
+            ('ù', 'u'),
+        },
+        wordlist=Path('/usr/share/dict/italian'),
+    ),
+}
+
+
+def help(retcode: int, msg: str) -> None:
+    if msg:
+        print(msg)
+    print(f'Usage: {argv[0]} language destfile wordlistfile\n')
+    print('Known languages are:\n' + '\n'.join(languages.keys()))
+    exit(retcode)
+
+
+def main() -> None:
+    if len(argv) >= 2 and argv[1] in ('-h', '--help'):
+        help(0, '')
+
+    if len(argv) != 4:
+        help(1, 'Incorrect number of parameters')
+
+    try:
+        language = languages[argv[1]]
+    except KeyError:
+        help(1, 'Unknown language')
+
+    try:
+        gen_language(language, Path(argv[2]), Path(argv[3]))
+    except Exception as e:
+        help(1, str(e))
+
+
+if __name__ == '__main__':
+    main()
