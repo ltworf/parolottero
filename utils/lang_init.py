@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 # parolottero
 # Copyright (C) 2021 Salvo "LtWorf" Tomaselli
 #
