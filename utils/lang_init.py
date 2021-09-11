@@ -109,3 +109,16 @@ def letter_score(freqs: list[str]) -> list[tuple[str, int]]:
         r.append((letter, round(log(points))))
         score *= 2
     return r
+
+
+def gen_language(language: Language) -> None:
+    print(f'Generating language file for {language.name}')
+    words = scan_language(italian)
+    print(f'Language has {len(words)} words')
+    frequencies = letter_frequency(words)
+
+    print_letterlist(frequencies, 'Frequencies')
+
+    scores = letter_score([i[0] for i in frequencies])
+
+    print_letterlist(scores, 'Scores')
