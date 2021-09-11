@@ -42,3 +42,22 @@ Language(
     wordlist=Path('/usr/share/dict/italian'),
 )
 
+
+def scan_language(language: Language) -> set[str]:
+    '''
+    Load a language, returns a set of playable words
+    '''
+    words = set()
+    with open(language.wordlist, 'rt') as f:
+        for word in f.readlines():
+            word = word.strip().lower()
+
+            for find, replace in language.substitutions:
+                word = word.replace(find, replace)
+
+            if set(word).difference(language.letters):
+                # unknown symbols in the word, skipping
+                continue
+
+            words.add(word)
+    return words
