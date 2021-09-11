@@ -61,3 +61,15 @@ def scan_language(language: Language) -> set[str]:
 
             words.add(word)
     return words
+
+
+def print_letterlist(ll: Iterable[tuple[str, int]], title: str):
+    '''
+    Pretty print a letter list
+    '''
+    print(title)
+    print('=' * len(title))
+
+    for letter, count in ll:
+        print(f'{letter}: {count}')
+    print()
