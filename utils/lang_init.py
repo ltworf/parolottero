@@ -73,3 +73,19 @@ def print_letterlist(ll: Iterable[tuple[str, int]], title: str):
     for letter, count in ll:
         print(f'{letter}: {count}')
     print()
+
+
+def letter_frequency(words: Iterable[str]) -> list[tuple[str, int]]:
+    '''
+    Calculates the frequency of the letters in the
+    given set of words
+    '''
+    frequency = {}
+
+    for word in words:
+        for letter in word:
+            frequency[letter] = frequency.get(letter, 0) + 1
+
+    freqs = [(k, v) for k,v in frequency.items()]
+    freqs.sort(key=lambda x: x[1])
+    return freqs
