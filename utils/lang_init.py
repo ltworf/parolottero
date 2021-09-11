@@ -16,7 +16,8 @@
 #
 # author Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
 
-from typing import NamedTuple, Set, Tuple
+from math import log
+from typing import NamedTuple, Iterable
 from pathlib import Path
 
 
@@ -89,3 +90,22 @@ def letter_frequency(words: Iterable[str]) -> list[tuple[str, int]]:
     freqs = [(k, v) for k,v in frequency.items()]
     freqs.sort(key=lambda x: x[1])
     return freqs
+
+
+def letter_score(freqs: list[str]) -> list[tuple[str, int]]:
+    '''
+    Assigns scores for letters.
+
+    More common letters are worth less points.
+
+    Score is done on a log scale.
+    '''
+    score = 1.1
+    r = []
+
+    while len(freqs):
+        letter = freqs.pop()
+        points = 2 + score
+        r.append((letter, round(log(points))))
+        score *= 2
+    return r
