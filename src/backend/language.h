@@ -25,18 +25,26 @@ author Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
 #include <QString>
 #include <QSet>
 #include <QFile>
+#include <QMap>
+#include <QList>
 
 class Language : public QObject
 {
     Q_OBJECT
 public:
     explicit Language(QFile &langfile, QFile &wordlist, QObject *parent = nullptr);
+    QList<QString> letters;
+    QList<QString> vowels;
+    QString name;
 
 public slots:
     bool is_word(QString word);
+    int get_score(QString letter);
 
 private:
     QSet<QString> words;
+    QMap<QString, unsigned int> score;
+    void load_langfile(QFile &file);
 
 signals:
 

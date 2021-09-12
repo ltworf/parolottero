@@ -21,27 +21,107 @@ author Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
 #include "language.h"
 
 #include <QDebug>
+#include <QStringList>
 
+/**
+ * @brief read_and_strip
+ * @param file
+ * @return
+ *
+ * Reads 1 line from the file, removes the \n at the end
+ * and returns the rest as QString
+ */
+static QString read_and_strip(QFile &file) {
+    char buf[128];
+    qint64 size = file.readLine(buf, sizeof(buf));
+    if (size == -1)
+        return "";
+    if (buf[size - 1] == '\n')
+        buf[size - 1] = '\0';
+    return QString(buf);
+}
 
-void wordlistload(QFile &wordlist, QSet<QString> &dest_set) {
-    if (!wordlist.open(QIODevice::ReadOnly | QIODevice::Text)) {
+/**
+ * @brief wordlistload
+ * @param file
+ * @param dest_set
+ *
+ * Loads the wordlist file into a QSet
+ */
+void wordlistload(QFile &file, QSet<QString> &dest_set) {
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         //TODO error
     }
 
-    char buf[128];
     while (true) {
-        qint64 size = wordlist.readLine(buf, sizeof(buf));
-        if (size <= 0) break;
-        buf[size - 1] = '\0'; // Remove final \n
-        dest_set.insert(QString(buf));
+        QString word = read_and_strip(file);
+        if (word.size() == 0)
+            break;
+        dest_set.insert(word);
     }
-    wordlist.close();
+    file.close();
 }
 
+void Language::load_langfile(QFile &file) {
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        //TODO error
+    }
+
+    // Read language name
+    this->name = read_and_strip(file);
+
+    while (true) {
+        QString line = read_and_strip(file);
+        if (line.size() == 0)
+            break;
+
+        QStringList parts = line.split(" ");
+        this->letters.append(parts[0]);
+        this->score[parts[0]] = parts[1].toUInt();
+        if (parts[2].size())
+            this->vowels.append(parts[0]);
+    }
+
+    file.close();
+}
+
+/**
+ * @brief Language::Language
+ * @param langfile: File with the language definition
+ * @param wordlist: File with the list of words in the language
+ * @param parent
+ *
+ * Class representing a language.
+ */
 Language::Language(QFile &langfile, QFile &wordlist, QObject *parent) : QObject(parent) {
     wordlistload(wordlist, this->words);
+    this->load_langfile(langfile);
 }
 
+/**
+ * @brief Language::is_word
+ * @param word
+ * @return
+ *
+ * Check if a word is in the language.
+ *
+ * It must be passed lowercase
+ */
 bool Language::is_word(QString word) {
     return this->words.contains(word);
+}
+
+/**
+ * @brief Language::get_score
+ * @param letter
+ * @return
+ *
+ * Returns the score for a letter.
+ *
+ * -1 if the letter doesn't exist
+ */
+int Language::get_score(QString letter) {
+    if (!this->score.contains(letter))
+        return -1;
+    return this->score[letter];
 }
