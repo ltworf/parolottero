@@ -26,6 +26,7 @@ author Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
 #include <QDebug>
 
 #include <backend/language.h>
+#include <backend/boardmanager.h>
 
 int main(int argc, char *argv[])
 {
@@ -44,10 +45,8 @@ int main(int argc, char *argv[])
     QFile ldef("/home/salvo/dev/parolottero/language_data/italian");
     QFile wlist("/home/salvo/dev/parolottero/language_data/italian.wordlist");
     Language l(ldef,wlist);
-    qDebug() << l.is_word("cilloppero");
-    qDebug() << l.is_word("ciao");
-    qDebug() << l.is_word("cilindro");
-    qDebug() << l.is_word("cilindrone");
+
+    BoardManager mgr(&l, 19903);
 
     MainWindow w;
     w.show();
