@@ -18,7 +18,7 @@
 
 QT       += core gui
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += quick
 
 CONFIG += c++11
 
@@ -29,16 +29,13 @@ DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs depr
 SOURCES += \
     backend/boardmanager.cpp \
     backend/language.cpp \
-    main.cpp \
-    mainwindow.cpp
+    backend/languagemanager.cpp \
+    main.cpp
 
 HEADERS += \
     backend/boardmanager.h \
     backend/language.h \
-    mainwindow.h
-
-FORMS += \
-    mainwindow.ui
+    backend/languagemanager.h
 
 TRANSLATIONS += \
     parolottero_it_IT.ts
@@ -49,3 +46,10 @@ CONFIG += embed_translations
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+DISTFILES += \
+    ui/LangSelector.qml \
+    ui/main.qml \
+    ui/main_copy.qml
+
+RESOURCES += qml.qrc
