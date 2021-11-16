@@ -13,7 +13,7 @@ Window {
         id: language_selector
         height: parent.height
         width: parent.width
-        visible: language == null
+        visible: language_index < 0
     }
 
     Settings {

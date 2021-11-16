@@ -2,7 +2,7 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 
 ListView {
-    property variant language: null;
+    property int language_index: -1;
     model: items
 
     ListModel {
@@ -19,7 +19,7 @@ ListView {
         width: parent.width
         text: model.name
         onClicked: {
-            language = model.name
+            language_index = model.index
         }
     }
 
@@ -27,7 +27,7 @@ ListView {
         items.clear()
         var languages = languageManager.languages();
         for(var i=0; i < languages.length; languages++) {
-            items.append({name: languages[i]})
+            items.append({name: languages[i], index: i})
         }
     }
 
