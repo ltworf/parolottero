@@ -9,10 +9,13 @@ Window {
     width: 640
     height: 480
     visible: true
-    title: qsTr("Hello pino")
+    title: qsTr("Parolottero")
 
     LangSelector {
-
+        id: language_selector
+        height: parent.height
+        width: parent.width
+        visible: language == null
     }
 
 }
