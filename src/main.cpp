@@ -26,6 +26,7 @@ author Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
 #include <QTranslator>
 
 #include "backend/languagemanager.h"
+#include "backend/boardgenerator.h"
 
 int main(int argc, char *argv[])
 {
@@ -56,8 +57,11 @@ int main(int argc, char *argv[])
         if (!obj && url == objUrl)
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
-    LanguageManager mgr(&engine);
-    engine.rootContext()->setContextProperty("languageManager", &mgr);
+    LanguageManager language_manager(&engine);
+    BoardGenerator board_generator(&engine);
+    engine.rootContext()->setContextProperty("languageManager", &language_manager);
+    engine.rootContext()->setContextProperty("boardGenerator", &board_generator);
+
     engine.load(url);
 
     return app.exec();
