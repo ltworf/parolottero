@@ -45,6 +45,10 @@ int main(int argc, char *argv[])
         }
     }
 
+    app.setApplicationName("Parolottero");
+    app.setOrganizationDomain("Parolottero");
+    app.setOrganizationName("Parolottero");
+
     QQmlApplicationEngine engine;
     const QUrl url(QStringLiteral("qrc:/ui/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,

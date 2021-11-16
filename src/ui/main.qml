@@ -1,15 +1,13 @@
 import QtQuick 2.15
 import QtQuick.Window 2.15
-
-
+import Qt.labs.settings 1.1
 import QtQuick.Controls 2.15
 
 
 Window {
-    width: 640
-    height: 480
     visible: true
     title: qsTr("Parolottero")
+    id: main_window
 
     LangSelector {
         id: language_selector
@@ -18,4 +16,10 @@ Window {
         visible: language == null
     }
 
+    Settings {
+        property alias x: main_window.x
+        property alias y: main_window.y
+        property alias width: main_window.width
+        property alias height: main_window.height
+    }
 }
