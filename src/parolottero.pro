@@ -27,12 +27,14 @@ CONFIG += c++11
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    backend/boardgenerator.cpp \
     backend/boardmanager.cpp \
     backend/language.cpp \
     backend/languagemanager.cpp \
     main.cpp
 
 HEADERS += \
+    backend/boardgenerator.h \
     backend/boardmanager.h \
     backend/language.h \
     backend/languagemanager.h
