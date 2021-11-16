@@ -45,6 +45,12 @@ class BoardManager : public QObject
             NOTIFY seed_changed
     )
 
+    Q_PROPERTY(
+            unsigned int total
+            READ get_total()
+            NOTIFY total_changed
+    )
+
 public:
     explicit BoardManager(QObject *parent = nullptr);
 
@@ -63,7 +69,7 @@ public slots:
 signals:
     void seed_changed(unsigned int);
     void language_changed(int);
-
+    void total_changed(unsigned int);
 
 private:
     void init();
