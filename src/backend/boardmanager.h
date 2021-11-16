@@ -51,6 +51,12 @@ class BoardManager : public QObject
             NOTIFY total_changed
     )
 
+    Q_PROPERTY(
+            bool playable
+            READ get_playable
+            NOTIFY playable_changed
+    )
+
 public:
     explicit BoardManager(QObject *parent = nullptr);
 
@@ -66,10 +72,13 @@ public slots:
     void set_language(int);
     int get_language();
 
+    bool get_playable();
+
 signals:
     void seed_changed(unsigned int);
     void language_changed(int);
     void total_changed(unsigned int);
+    void playable_changed(bool);
 
 private:
     void init();
@@ -81,8 +90,6 @@ private:
     unsigned int total = 0;
     unsigned int _seed = 0;
     int _language_index = -1;
-
-
 };
 
 #endif // BOARDMANAGER_H

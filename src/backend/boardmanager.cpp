@@ -27,8 +27,10 @@ BoardManager::BoardManager(QObject *parent) : QObject(parent)
 { }
 
 void BoardManager::init() {
-    if (this->language != nullptr)
+    if (this->language != nullptr) {
         delete this->language;
+        this->language = nullptr;
+    }
 
     this->multipliers.clear();
     this->letters.clear();
@@ -39,9 +41,11 @@ void BoardManager::init() {
         emit total_changed(0);
     }
 
-    if (this->_language_index < 0)
+    if (this->_language_index < 0) {
+        emit playable_changed(false);
         return;
-
+    }
+    emit playable_changed(true);
 
     LanguageManager lang_magr;
 
@@ -132,3 +136,8 @@ void BoardManager::set_language(int language_index) {
 int BoardManager::get_language() {
     return this->_language_index;
 }
+
+bool BoardManager::get_playable() {
+    return this->language != nullptr;
+}
+
