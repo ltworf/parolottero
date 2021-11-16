@@ -7,29 +7,28 @@ ListView {
 
     ListModel {
         id: items
-
-        Component.onCompleted: {
-            var languages = languageManager.languages();
-            console.debug(languages)
-            for(var i=0; i < languages.size(); languages++) {
-                items.append(languages[i])
-            }
-
-            console.debug(items)
-        }
     }
 
     header: Label {
-        text: "Pick a language"
+        text: qsTr("Pick a language")
+        width: parent.width
+        horizontalAlignment: Text.AlignHCenter
     }
 
     delegate: Button {
-        width: parent.width * 0.95
-        height: 31
-        text: 'ciccio'
+        width: parent.width
+        text: model.name
+        onClicked: {
+            language = model.name
+        }
+    }
 
+    Component.onCompleted: {
+        items.clear()
+        var languages = languageManager.languages();
+        for(var i=0; i < languages.length; languages++) {
+            items.append({name: languages[i]})
+        }
     }
 
 }
-
-
