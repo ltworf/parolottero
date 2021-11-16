@@ -16,6 +16,9 @@ Window {
         visible: language_index < 0
     }
 
+    PlayBoard {
+    }
+
     Settings {
         property alias x: main_window.x
         property alias y: main_window.y

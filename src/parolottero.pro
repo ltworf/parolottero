@@ -51,6 +51,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 DISTFILES += \
     ui/LangSelector.qml \
+    ui/PlayBoard.qml \
     ui/main.qml \
     ui/main_copy.qml
 
