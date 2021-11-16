@@ -31,8 +31,22 @@ author Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
 class BoardManager : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(
+            int language
+            READ get_language
+            NOTIFY language_changed
+            WRITE set_language
+    )
+
+    Q_PROPERTY(
+            unsigned int seed
+            READ get_seed()
+            WRITE set_seed()
+            NOTIFY seed_changed
+    )
+
 public:
-    explicit BoardManager(Language *language, unsigned int seed, QObject *parent = nullptr);
+    explicit BoardManager(QObject *parent = nullptr);
 
 public slots:
     unsigned int input_word(QList<unsigned int> cells);
@@ -40,15 +54,27 @@ public slots:
     unsigned int get_multiplier(unsigned int cell);
     QString get_letter(unsigned int cell);
 
+    void set_seed(unsigned int);
+    unsigned int get_seed();
+
+    void set_language(int);
+    int get_language();
+
 signals:
+    void seed_changed(unsigned int);
+    void language_changed(int);
+
 
 private:
-    Language* language;
+    void init();
+    Language* language = nullptr;
     QList<QString> letters;
     QList<unsigned int> multipliers;
 
     QStringList words;
-    unsigned int total;
+    unsigned int total = 0;
+    unsigned int _seed = 0;
+    int _language_index = -1;
 
 
 };

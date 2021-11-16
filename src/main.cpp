@@ -26,7 +26,7 @@ author Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
 #include <QTranslator>
 
 #include "backend/languagemanager.h"
-#include "backend/boardgenerator.h"
+#include "backend/boardmanager.h"
 
 int main(int argc, char *argv[])
 {
@@ -58,9 +58,8 @@ int main(int argc, char *argv[])
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
     LanguageManager language_manager(&engine);
-    BoardGenerator board_generator(&engine);
     engine.rootContext()->setContextProperty("languageManager", &language_manager);
-    engine.rootContext()->setContextProperty("boardGenerator", &board_generator);
+    qmlRegisterType<BoardManager>("ltworf.parolottero", 1, 0, "BoardManager");
 
     engine.load(url);
 

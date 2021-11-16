@@ -20,19 +20,37 @@ author Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
 
 #include <stdlib.h>
 #include "boardmanager.h"
+#include "languagemanager.h"
 
-BoardManager::BoardManager(Language* language, unsigned int seed, QObject *parent) : QObject(parent)
-{
-    this->language = language;
+
+BoardManager::BoardManager(QObject *parent) : QObject(parent)
+{ }
+
+void BoardManager::init() {
+    if (this->language != nullptr)
+        delete this->language;
+
+    this->multipliers.clear();
+    this->letters.clear();
+    this->words.clear();
+    this->total = 0;
+
+    if (this->_language_index < 0)
+        return;
+
+
+    LanguageManager lang_magr;
+
+    this->language = lang_magr.get_language(this->_language_index);
 
     //init board
     //Give vowels double chances to appear
     QStringList morevowels = language->letters + language->vowels;
     int lcount = morevowels.size();
     for (int i = 0; i < 16; i++) {
-        this->letters.append(morevowels[rand_r(&seed) % lcount]);
+        this->letters.append(morevowels[rand_r(&(this->_seed)) % lcount]);
         unsigned int multiplier;
-        switch (rand_r(&seed) % 10) {
+        switch (rand_r(&(this->_seed)) % 10) {
             case 3:
                 multiplier = 3;
                 break;
@@ -57,6 +75,8 @@ BoardManager::BoardManager(Language* language, unsigned int seed, QObject *paren
  * sequence.
  */
 unsigned int BoardManager::input_word(QList<unsigned int> cells) {
+    if (this->language == nullptr)
+        return 0;
     QString word;
 
     unsigned int score = 0;
@@ -82,4 +102,28 @@ unsigned int BoardManager::get_multiplier(unsigned int cell) {
 
 QString BoardManager::get_letter(unsigned int cell) {
     return this->letters[cell];
+}
+
+void BoardManager::set_seed(unsigned int seed) {
+    if (seed == this->_seed)
+        return;
+    this->_seed = seed;
+    this->init();
+    emit seed_changed(seed);
+}
+
+unsigned int BoardManager::get_seed() {
+    return this->_seed;
+}
+
+void BoardManager::set_language(int language_index) {
+    if (language_index == this->_language_index)
+        return;
+    this->_language_index = language_index;
+    this->init();
+    emit language_changed(language_index);
+}
+
+int BoardManager::get_language() {
+    return this->_language_index;
 }

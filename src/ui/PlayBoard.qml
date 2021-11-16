@@ -1,10 +1,14 @@
 import QtQuick 2.0
 import QtQuick.Layouts 1.15
 
+import ltworf.parolottero 1.0
+
 ColumnLayout {
 
     property int language_id
 
-    property variant board: boardGenerator.board(language_id, 0)
-
+    BoardManager {
+        seed: 0
+        language: language_id
+    }
 }
