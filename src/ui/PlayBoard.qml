@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import QtQuick.Layouts 1.15
+import QtQuick.Controls 2.15
 
 import ltworf.parolottero 1.0
 
@@ -20,4 +21,21 @@ ColumnLayout {
         language: -1
     }
 
+
+    GridLayout {
+        columns: 4
+
+        Button { text: "a"}
+        Button { text: "a"}
+        Button { text: "a"}
+        Button { text: "a"}
+        Button { text: "a"}
+        Button { text: "a"}
+        Button { text: "a"}
+        Button { text: "a"}
+    }
+
+    Label {
+        text: qsTr("Total: " + board.total)
+    }
 }
