@@ -11,13 +11,13 @@ Window {
 
     LangSelector {
         id: language_selector
-        height: parent.height
-        width: parent.width
+        anchors.fill: parent
         visible: !board.playable
     }
 
     PlayBoard {
         id: board
+        anchors.fill: parent
         language_id: language_selector.language_index
         visible: board.playable
     }
