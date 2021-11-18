@@ -27,11 +27,11 @@ QStringList LanguageManager::languages() {
     return r;
 }
 
-Language* LanguageManager::get_language(unsigned int id) {
+Language* LanguageManager::get_language(unsigned int id, QObject* parent) {
     auto langname = this->languages()[id];
     QFile ldef("/home/salvo/dev/parolottero/language_data/" + langname);
     QFile wlist("/home/salvo/dev/parolottero/language_data/" + langname + ".wordlist");
-    Language* l = new Language(ldef, wlist, this->parent());
+    Language* l = new Language(ldef, wlist, parent);
     return l;
 }
 

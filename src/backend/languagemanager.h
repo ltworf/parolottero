@@ -35,7 +35,7 @@ signals:
 
 public slots:
     QStringList languages();
-    Language* get_language(unsigned int);
+    Language* get_language(unsigned int, QObject* parent);
 };
 
 #endif // LANGUAGEMANAGER_H
