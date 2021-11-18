@@ -13,10 +13,13 @@ Window {
         id: language_selector
         height: parent.height
         width: parent.width
-        visible: language_index < 0
+        visible: !board.playable
     }
 
     PlayBoard {
+        id: board
+        language_id: language_selector.language_index
+        visible: board.playable
     }
 
     Settings {
