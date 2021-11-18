@@ -8,8 +8,6 @@ Item {
     property int language_id: -1
     property bool playable: board.playable
 
-    property string current_word: ""
-
     onLanguage_idChanged: {
         // This should not be necessary but it is
         // Probably a bug I do not understand
@@ -28,6 +26,9 @@ Item {
     }
 
     BoardManager {
+        property string current_word: ""
+        property var current_word_indexes: []
+
         id: board
         seed: 0
         language: -1
@@ -52,25 +53,63 @@ Item {
             anchors.fill: parent
             hoverEnabled: true
 
+            onPressed: {
+                mouse.accepted = true;
+
+                var index = find_item_index(mouse.x, mouse.y);
+                if (index < 0)
+                    return;
+
+                board.current_word += items.get(index).name
+                board.current_word_indexes.push(index);
+                grid.currentIndex = index;
+                grid.itemAtIndex(index).used = true;
+            }
+
+            onReleased: {
+                mouse.accepted = true;
+                console.log(board.current_word);
+                console.log(board.current_word_indexes);
+                for (var i = 0; i < board.size; i++) {
+                    grid.itemAtIndex(i).used = false;
+                }
+                board.input_word(board.current_word_indexes);
+                grid.currentIndex = -1;
+                board.current_word = "";
+                board.current_word_indexes = [];
+            }
+
             onPositionChanged : {
+                mouse.accepted = true;
+
                 if (mouse.buttons == 0)
                     return;
-                mouse.accepted = true
 
+                var index = find_item_index(mouse.x, mouse.y);
+                if (index < 0 || grid.itemAtIndex(index).used)
+                    return;
+                grid.itemAtIndex(index).used = true;
+                grid.currentIndex = index;
+                board.current_word += items.get(index).name;
+                board.current_word_indexes.push(index);
+            }
+
+            function find_item_index(x, y) {
                 for (var i=0; i < board.size; i++) {
                     var item = grid.itemAtIndex(i);
-                    var point = mapToItem(item, mouse.x, mouse.y);
+                    var point = mapToItem(item, x, y);
                     if (item.contains(point))
-                        console.debug(i)
+                        return i;
                 }
-
+                return -1;
             }
         }
 
         delegate: Rectangle {
+            property bool used: false
             width: 80; height: 80
             border.width: 3
-            color: "transparent"
+            color: used ? "gray": "transparent"
 
             Text {
                 id: myIcon
@@ -83,7 +122,7 @@ Item {
             }
 
         }
-        header: Label {text: current_word}
+        header: Label {text: board.current_word}
         footer: Label {text: qsTr("Total: ") + board.total}
     }
 }
