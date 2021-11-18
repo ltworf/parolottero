@@ -48,8 +48,7 @@ void BoardManager::init() {
     emit playable_changed(true);
 
     LanguageManager lang_magr;
-
-    this->language = lang_magr.get_language(this->_language_index);
+    this->language = lang_magr.get_language(this->_language_index, this);
 
     //init board
     //Give vowels double chances to appear
