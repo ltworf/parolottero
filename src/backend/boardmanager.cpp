@@ -45,8 +45,6 @@ void BoardManager::init() {
         emit playable_changed(false);
         return;
     }
-    emit playable_changed(true);
-
     LanguageManager lang_magr;
     this->language = lang_magr.get_language(this->_language_index, this);
 
@@ -71,6 +69,9 @@ void BoardManager::init() {
 
         this->multipliers.append(multiplier);
     }
+
+    emit playable_changed(true);
+
 }
 
 /**
