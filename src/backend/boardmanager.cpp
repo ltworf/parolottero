@@ -89,8 +89,8 @@ unsigned int BoardManager::input_word(QList<unsigned int> cells) {
 
     unsigned int score = 0;
     for (int i = 0; i < cells.size(); i++) {
-        word += this->letters[i];
-        score += this->language->get_score(this->letters[i]) * this->multipliers[i];
+        word += this->letters[cells[i]];
+        score += this->language->get_score(this->letters[cells[i]]) * this->multipliers[cells[i]];
     }
     if (this->language->is_word(word)) {
         this->total += score;
