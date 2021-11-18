@@ -22,7 +22,7 @@ Item {
             return;
         }
 
-        for (var i=0; i<16; i++) {
+        for (var i=0; i < board.size; i++) {
             items.append({index: i, name: board.get_letter(i), multiplier: board.get_multiplier(i)})
         }
     }
@@ -57,7 +57,7 @@ Item {
                     return;
                 mouse.accepted = true
 
-                for (var i=0; i < 16; i++) {
+                for (var i=0; i < board.size; i++) {
                     var item = grid.itemAtIndex(i);
                     var point = mapToItem(item, mouse.x, mouse.y);
                     if (item.contains(point))

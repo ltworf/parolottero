@@ -141,3 +141,6 @@ bool BoardManager::get_playable() {
     return this->language != nullptr;
 }
 
+unsigned int BoardManager::get_size() {
+    return 16;
+}
