@@ -2,7 +2,11 @@ Source: parolottero
 Section: games
 Priority: optional
 Maintainer: Salvo 'LtWorf' Tomaselli <tiposchi@tiscali.it>
-Build-Depends: debhelper, python3-minimal, witalian
+Build-Depends:
+ debhelper,
+ python3-minimal,
+ witalian,
+ wswedish
 Standards-Version: 4.5.1
 Homepage: https://github.com/ltworf/parolottero
 Vcs-Browser: https://github.com/ltworf/parolottero

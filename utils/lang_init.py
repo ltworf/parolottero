@@ -146,6 +146,14 @@ languages = {
         },
         wordlist=Path('/usr/share/dict/italian'),
     ),
+    'swedish': Language(
+        name='Svenska',
+        letters=set('abcdefghjkilmnopqrstuvwxyzäöå'),
+        vowels=set('aeiouäöå'),
+        substitutions=set(),
+        wordlist=Path('/usr/share/dict/swedish'),
+        encoding='iso-8859-15',
+    )
 }
 
 
