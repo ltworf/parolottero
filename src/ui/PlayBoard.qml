@@ -26,8 +26,9 @@ Item {
     }
 
     BoardManager {
-        property string current_word: ""
+        property string last_word: ""
         property var current_word_indexes: []
+        property int last_score: 0
 
         id: board
         seed: 0
@@ -60,23 +61,25 @@ Item {
                 if (index < 0)
                     return;
 
-                board.current_word += items.get(index).name
-                board.current_word_indexes.push(index);
+                board.current_word_indexes = [index];
                 grid.currentIndex = index;
                 grid.itemAtIndex(index).used = true;
             }
 
             onReleased: {
                 mouse.accepted = true;
-                console.log(board.current_word);
-                console.log(board.current_word_indexes);
                 for (var i = 0; i < board.size; i++) {
                     grid.itemAtIndex(i).used = false;
                 }
-                board.input_word(board.current_word_indexes);
+                board.last_score = board.input_word(board.current_word_indexes);
+
+                var word = "";
+                for (i=0; i < board.current_word_indexes.length; i++) {
+                    word += items.get(board.current_word_indexes[i]).name;
+                }
+                board.last_word = word;
+
                 grid.currentIndex = -1;
-                board.current_word = "";
-                board.current_word_indexes = [];
             }
 
             onPositionChanged : {
@@ -90,7 +93,6 @@ Item {
                     return;
                 grid.itemAtIndex(index).used = true;
                 grid.currentIndex = index;
-                board.current_word += items.get(index).name;
                 board.current_word_indexes.push(index);
             }
 
@@ -122,7 +124,12 @@ Item {
             }
 
         }
-        header: Label {text: board.current_word}
+
+        header: Text {
+                text: board.last_word
+                color: board.last_score ? "green" : "red"
+        }
+
         footer: Label {text: qsTr("Total: ") + board.total}
     }
 }
