@@ -212,3 +212,14 @@ bool BoardManager::get_playable() {
 unsigned int BoardManager::get_size() {
     return 16;
 }
+
+bool BoardManager::are_adjacent(unsigned int a, unsigned int b) {
+    int col_a = a % this->columns;
+    int row_a = a / this->rows;
+
+    int col_b = b % this->columns;
+    int row_b = b / this->rows;
+
+    return std::abs(col_a - col_b) < 2 && \
+           std::abs(row_a - row_b) < 2;
+}

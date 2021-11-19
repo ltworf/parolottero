@@ -107,6 +107,8 @@ Item {
                 var index = find_item_index(mouse.x, mouse.y);
                 if (index < 0 || grid.itemAtIndex(index).used)
                     return;
+                if (! board.are_adjacent(index, board.current_word_indexes[board.current_word_indexes.length - 1]))
+                    return;
                 grid.itemAtIndex(index).used = true;
                 grid.currentIndex = index;
                 board.current_word_indexes.push(index);

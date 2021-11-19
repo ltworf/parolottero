@@ -66,6 +66,7 @@ public:
     explicit BoardManager(QObject *parent = nullptr);
 
 public slots:
+    bool are_adjacent(unsigned int a, unsigned int b);
     unsigned int input_word(QList<unsigned int> cells);
     unsigned int get_total();
     unsigned int get_multiplier(unsigned int cell);
@@ -97,6 +98,9 @@ private:
     unsigned int total = 0;
     unsigned int _seed = 0;
     int _language_index = -1;
+
+    unsigned int rows = 4;
+    unsigned int columns = 4;
 };
 
 #endif // BOARDMANAGER_H
