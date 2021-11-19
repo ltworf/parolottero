@@ -50,6 +50,23 @@ Item {
 
         highlight: Rectangle { width: 100; height: 100; color: "lightsteelblue" }
 
+        delegate: LetterCell {
+            width: 80; height: 80
+            text: name.toUpperCase()
+            multiplier: cell_multiplier
+        }
+
+        header: Text {
+                text: board.last_word
+                color: board.last_score ? "green" : "red"
+                font.pointSize: 30
+        }
+
+        footer: Label {
+            text: qsTr("Total: ") + board.total
+            font.pointSize: 30
+        }
+
         MouseArea {
             anchors.fill: parent
             hoverEnabled: true
@@ -107,21 +124,5 @@ Item {
             }
         }
 
-        delegate: LetterCell {
-            width: 80; height: 80
-            text: name.toUpperCase()
-            multiplier: cell_multiplier
-        }
-
-        header: Text {
-                text: board.last_word
-                color: board.last_score ? "green" : "red"
-                font.pointSize: 30
-        }
-
-        footer: Label {
-            text: qsTr("Total: ") + board.total
-            font.pointSize: 30
-        }
     }
 }
