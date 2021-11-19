@@ -24,6 +24,7 @@ author Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
 QStringList LanguageManager::languages() {
     QStringList r;
     r.append("italian");
+    r.append("swedish");
     return r;
 }
 
