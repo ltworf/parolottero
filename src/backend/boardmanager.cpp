@@ -52,7 +52,7 @@ void BoardManager::init() {
     //Give vowels double chances to appear
     QStringList morevowels = language->letters + language->vowels;
     int lcount = morevowels.size();
-    for (int i = 0; i < 16; i++) {
+    for (unsigned int i = 0; i < this->get_size(); i++) {
         this->letters.append(morevowels[rand_r(&(this->_seed)) % lcount]);
         unsigned int multiplier;
         switch (rand_r(&(this->_seed)) % 10) {
@@ -210,7 +210,7 @@ bool BoardManager::get_playable() {
  * @return number of cells on the board
  */
 unsigned int BoardManager::get_size() {
-    return 16;
+    return this->rows * this->columns;
 }
 
 bool BoardManager::are_adjacent(unsigned int a, unsigned int b) {
