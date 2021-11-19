@@ -67,7 +67,7 @@ ColumnLayout{
     Component.onCompleted: {
         items.clear()
         var languages = languageManager.languages();
-        for(var i=0; i < languages.length; languages++) {
+        for(var i = 0; i < languages.length; i++) {
             items.append({name: languages[i], index: i})
         }
     }
