@@ -1,26 +1,53 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
+import QtQuick.Layouts 1.12
 
-ListView {
-    property int language_index: -1;
-    model: items
+ColumnLayout{
+    property int language_index: -1
+    property alias seed: spinseed.text
+    spacing: 2
 
-    ListModel {
-        id: items
+    ListView {
+        Layout.alignment: Qt.AlignLeft
+        Layout.fillHeight: true
+        Layout.fillWidth: true
+
+        model: items
+
+        header: Label {
+            font.pointSize: 25
+            text: qsTr("Pick a language")
+            width: parent.width
+            horizontalAlignment: Text.AlignHCenter
+        }
+
+        ListModel {
+            id: items
+        }
+
+        delegate: Button {
+            width: parent.width
+            text: name
+            onClicked: {
+                language_index = index
+            }
+        }
     }
 
-    header: Label {
-        font.pointSize: 25
-        text: qsTr("Pick a language")
-        width: parent.width
-        horizontalAlignment: Text.AlignHCenter
-    }
+    GridLayout {
+        Layout.fillWidth: true
+        Layout.alignment: Qt.AlignBottom
+        columns: 2
 
-    delegate: Button {
-        width: parent.width
-        text: model.name
-        onClicked: {
-            language_index = model.index
+        Label {
+            text: qsTr("Seed")
+            Layout.alignment: Qt.AlignLeft
+        }
+        TextField {
+            id: spinseed
+            placeholderText: qsTr("Seed")
+            validator: IntValidator {bottom: 1; top: 100}
+            Layout.alignment: Qt.AlignRight
         }
     }
 
@@ -31,5 +58,4 @@ ListView {
             items.append({name: languages[i], index: i})
         }
     }
-
 }

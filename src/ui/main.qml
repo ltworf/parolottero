@@ -20,9 +20,12 @@ Window {
         anchors.fill: parent
         language_id: language_selector.language_index
         visible: board.playable
+        seed: language_selector.seed
     }
 
     Settings {
+        id: settings
+        property alias seed: language_selector.seed
         property alias x: main_window.x
         property alias y: main_window.y
         property alias width: main_window.width
