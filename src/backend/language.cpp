@@ -53,12 +53,16 @@ void wordlistload(QFile &file, QSet<QString> &dest_set) {
         //TODO error
     }
 
+    unsigned long long int c = 0;
+
     while (true) {
         QString word = read_and_strip(file);
         if (word.size() == 0)
             break;
         dest_set.insert(word);
+        c++;
     }
+    qDebug() << "Loaded words" << c;
     file.close();
 }
 
@@ -108,6 +112,7 @@ Language::Language(QFile &langfile, QFile &wordlist, QObject *parent) : QObject(
  * It must be passed lowercase
  */
 bool Language::is_word(QString word) {
+    qDebug() << "Testing word" << word << this->words.contains(word);
     return this->words.contains(word);
 }
 
