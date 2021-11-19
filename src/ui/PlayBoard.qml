@@ -21,7 +21,7 @@ Item {
         }
 
         for (var i=0; i < board.size; i++) {
-            items.append({index: i, name: board.get_letter(i), multiplier: board.get_multiplier(i)})
+            items.append({index: i, name: board.get_letter(i), cell_multiplier: board.get_multiplier(i)})
         }
     }
 
@@ -107,22 +107,10 @@ Item {
             }
         }
 
-        delegate: Rectangle {
-            property bool used: false
+        delegate: LetterCell {
             width: 80; height: 80
-            border.width: 3
-            color: used ? "gray": "transparent"
-
-            Text {
-                id: myIcon
-                text: multiplier
-                y: 20; anchors.horizontalCenter: parent.horizontalCenter
-            }
-            Text {
-                anchors { top: myIcon.bottom; horizontalCenter: parent.horizontalCenter }
-                text: name.toUpperCase()
-            }
-
+            text: name.toUpperCase()
+            multiplier: cell_multiplier
         }
 
         header: Text {
