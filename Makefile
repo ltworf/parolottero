@@ -17,7 +17,7 @@
 # author Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
 
 .PHONY: all
-all: language_data/italian language_data/swedish
+all: language_data/italian language_data/swedish language_data/american
 
 language_data:
 	mkdir language_data

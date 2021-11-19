@@ -153,6 +153,13 @@ languages = {
         substitutions=set(),
         wordlist=Path('/usr/share/dict/swedish'),
         encoding='iso-8859-15',
+    ),
+    'american': Language(
+        name='US English',
+        letters=set('abcdefghilmnopqrstuvzwxyjk'),
+        vowels=set('aeiou'),
+        substitutions=set(),
+        wordlist=Path('/usr/share/dict/words'),
     )
 }
 

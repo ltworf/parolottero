@@ -25,6 +25,7 @@ QStringList LanguageManager::languages() {
     QStringList r;
     r.append("italian");
     r.append("swedish");
+    r.append("american");
     return r;
 }
 
