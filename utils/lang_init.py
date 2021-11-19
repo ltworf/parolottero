@@ -45,7 +45,13 @@ def scan_language(language: Language) -> set[str]:
                 print(f'Decoding error for word {binaryword!r}. Skipping')
                 continue
 
-            word = word.strip().lower()
+            word = word.strip()
+
+            if word.upper() == word:
+                # All uppercase word, probably not a real word
+                continue
+
+            word = word.lower()
 
             for find, replace in language.substitutions:
                 word = word.replace(find, replace)
