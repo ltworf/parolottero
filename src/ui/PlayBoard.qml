@@ -5,14 +5,8 @@ import QtQuick.Controls 2.15
 import ltworf.parolottero 1.0
 
 Item {
-    property int language_id: -1
-    property bool playable: board.playable
-
-    onLanguage_idChanged: {
-        // This should not be necessary but it is
-        // Probably a bug I do not understand
-        board.language = language_id
-    }
+    property alias language_id: board.language
+    property alias playable: board.playable
 
     onPlayableChanged: {
         items.clear();
