@@ -29,6 +29,7 @@ class Language(NamedTuple):
     substitutions: set[tuple[str, str]]
     wordlist: Path
     name: str
+    encoding: str = 'utf-8'
 
 
 def scan_language(language: Language) -> set[str]:
@@ -36,8 +37,14 @@ def scan_language(language: Language) -> set[str]:
     Load a language, returns a set of playable words
     '''
     words = set()
-    with open(language.wordlist, 'rt') as f:
-        for word in f.readlines():
+    with open(language.wordlist, 'rb') as f:
+        for binaryword in f.readlines():
+            try:
+                word = binaryword.decode(language.encoding)
+            except:
+                print(f'Decoding error for word {binaryword!r}. Skipping')
+                continue
+
             word = word.strip().lower()
 
             for find, replace in language.substitutions:
