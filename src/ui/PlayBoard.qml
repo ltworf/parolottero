@@ -7,6 +7,7 @@ import ltworf.parolottero 1.0
 Item {
     property alias language_id: board.language
     property alias playable: board.playable
+    property alias seed: board.seed
 
     onPlayableChanged: {
         items.clear();
@@ -25,7 +26,6 @@ Item {
         property int last_score: 0
 
         id: board
-        seed: 0
         language: -1
     }
 
