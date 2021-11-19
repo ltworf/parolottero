@@ -5,6 +5,7 @@ import QtQuick.Layouts 1.12
 ColumnLayout{
     property int language_index: -1
     property alias seed: spinseed.text
+    property alias duration: durationspin.value
     spacing: 2
 
     ListView {
@@ -49,6 +50,18 @@ ColumnLayout{
             validator: IntValidator {bottom: 1; top: 100}
             Layout.alignment: Qt.AlignRight
         }
+
+        Label {
+            text: qsTr("Duration")
+            Layout.alignment: Qt.AlignLeft
+        }
+
+        SpinBox {
+            id: durationspin
+            from: 1
+            to: 10
+        }
+
     }
 
     Component.onCompleted: {

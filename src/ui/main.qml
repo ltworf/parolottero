@@ -21,10 +21,12 @@ Window {
         language_id: language_selector.language_index
         visible: board.playable
         seed: language_selector.seed
+        duration: language_selector.duration
     }
 
     Settings {
         id: settings
+        property alias duration: language_selector.duration
         property alias seed: language_selector.seed
         property alias x: main_window.x
         property alias y: main_window.y

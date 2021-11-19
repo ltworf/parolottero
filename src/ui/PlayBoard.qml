@@ -8,6 +8,7 @@ Item {
     property alias language_id: board.language
     property alias playable: board.playable
     property alias seed: board.seed
+    property int duration: 3
 
     onPlayableChanged: {
         items.clear();
@@ -24,9 +25,17 @@ Item {
         property string last_word: ""
         property var current_word_indexes: []
         property int last_score: 0
+        property int seconds_left: -1
 
         id: board
         language: -1
+    }
+
+    Timer {
+        interval: 1000
+        repeat: true
+        running: board.seconds_left > 0
+        onTriggered: board.seconds_left--
     }
 
     ListModel {
@@ -55,10 +64,16 @@ Item {
             multiplier: cell_multiplier
         }
 
-        header: Text {
+        header: RowLayout {
+            Text {
                 text: board.last_word
                 color: board.last_score ? "green" : "red"
                 font.pointSize: 30
+            }
+
+            Text {
+                text: board.seconds_left
+            }
         }
 
         footer: Label {
@@ -72,6 +87,11 @@ Item {
 
             onPressed: {
                 mouse.accepted = true;
+
+                if (board.seconds_left == 0)
+                    return;
+                else if (board.seconds_left == -1)
+                    board.seconds_left = duration * 60
 
                 var index = find_item_index(mouse.x, mouse.y);
                 if (index < 0)
@@ -101,7 +121,7 @@ Item {
             onPositionChanged : {
                 mouse.accepted = true;
 
-                if (mouse.buttons == 0)
+                if (mouse.buttons == 0 || board.seconds_left == 0)
                     return;
 
                 var index = find_item_index(mouse.x, mouse.y);
