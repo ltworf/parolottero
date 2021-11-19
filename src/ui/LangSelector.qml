@@ -10,6 +10,7 @@ ListView {
     }
 
     header: Label {
+        font.pointSize: 25
         text: qsTr("Pick a language")
         width: parent.width
         horizontalAlignment: Text.AlignHCenter

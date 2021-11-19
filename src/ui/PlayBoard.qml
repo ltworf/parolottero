@@ -116,8 +116,12 @@ Item {
         header: Text {
                 text: board.last_word
                 color: board.last_score ? "green" : "red"
+                font.pointSize: 30
         }
 
-        footer: Label {text: qsTr("Total: ") + board.total}
+        footer: Label {
+            text: qsTr("Total: ") + board.total
+            font.pointSize: 30
+        }
     }
 }
