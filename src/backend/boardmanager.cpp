@@ -81,6 +81,8 @@ void BoardManager::init() {
  *
  * Pass moves to the board, which returns the score for the given
  * sequence.
+ *
+ * It also updates the total score.
  */
 unsigned int BoardManager::input_word(QList<unsigned int> cells) {
     if (this->language == nullptr)
@@ -104,18 +106,50 @@ unsigned int BoardManager::input_word(QList<unsigned int> cells) {
     return 0;
 }
 
+/**
+ * The current scored points for this board
+ *
+ * @brief BoardManager::get_total
+ * @return
+ */
 unsigned int BoardManager::get_total() {
     return this->total;
 }
 
+/**
+ * Gets the score multiplier at the specified position
+ *
+ * The position must be < get_size()
+ *
+ * @brief BoardManager::get_multiplier
+ * @param cell
+ * @return
+ */
 unsigned int BoardManager::get_multiplier(unsigned int cell) {
     return this->multipliers[cell];
 }
 
+/**
+ * Gets the letter at the specified position.
+ *
+ * The position must be < get_size()
+ *
+ * @brief BoardManager::get_letter
+ * @param cell
+ * @return
+ */
 QString BoardManager::get_letter(unsigned int cell) {
     return this->letters[cell];
 }
 
+/**
+ * Set a random seed.
+ *
+ * It is used to generate the board.
+ *
+ * @brief BoardManager::set_seed
+ * @param seed
+ */
 void BoardManager::set_seed(unsigned int seed) {
     if (seed == this->_seed)
         return;
@@ -124,10 +158,27 @@ void BoardManager::set_seed(unsigned int seed) {
     emit seed_changed(seed);
 }
 
+/**
+ * @brief BoardManager::get_seed
+ * @return the random seed in use
+ */
 unsigned int BoardManager::get_seed() {
     return this->_seed;
 }
 
+/**
+ * Set the language index.
+ *
+ * -1 to not have a language.
+ *
+ * This makes the board not playable.
+ *
+ * Any other value will load the language data and
+ * initialize the cells.
+ *
+ * @brief BoardManager::set_language
+ * @param language_index
+ */
 void BoardManager::set_language(int language_index) {
     if (language_index == this->_language_index)
         return;
@@ -136,14 +187,28 @@ void BoardManager::set_language(int language_index) {
     emit language_changed(language_index);
 }
 
+/**
+ * @brief BoardManager::get_language
+ * @return the index of the currently set language
+ *
+ * -1 if no language is set
+ */
 int BoardManager::get_language() {
     return this->_language_index;
 }
 
+/**
+ * @brief BoardManager::get_playable
+ * @return true if a language is set
+ */
 bool BoardManager::get_playable() {
     return this->language != nullptr;
 }
 
+/**
+ * @brief BoardManager::get_size
+ * @return number of cells on the board
+ */
 unsigned int BoardManager::get_size() {
     return 16;
 }
