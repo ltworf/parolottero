@@ -42,7 +42,7 @@ ColumnLayout{
 
         Label {
             text: qsTr("Seed")
-            Layout.alignment: Qt.AlignLeft
+            Layout.fillWidth: true
         }
         TextField {
             id: spinseed
@@ -53,7 +53,7 @@ ColumnLayout{
 
         Label {
             text: qsTr("Duration")
-            Layout.alignment: Qt.AlignLeft
+            Layout.fillWidth: true
         }
 
         SpinBox {

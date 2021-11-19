@@ -65,14 +65,25 @@ Item {
         }
 
         header: RowLayout {
-            Text {
+            width: parent.width
+            Label {
                 text: board.last_word
                 color: board.last_score ? "green" : "red"
                 font.pointSize: 30
+                Layout.fillWidth: true
             }
 
             Text {
                 text: board.seconds_left
+                color: board.seconds_left > 60 ? "green" : (board.seconds_left > 30? "yellow": "red")
+                font.pointSize: 40
+            }
+
+            Rectangle {
+                color: board.seconds_left > 60 ? "green" : (board.seconds_left > 30? "yellow": "red")
+                radius: 10
+                Layout.preferredHeight: 30
+                Layout.preferredWidth: 30
             }
         }
 
