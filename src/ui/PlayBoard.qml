@@ -42,21 +42,20 @@ Item {
     GridView {
         id: grid
         anchors.fill: parent
-        cellWidth: 100
+        cellWidth: width / 4
         cellHeight: cellWidth
-        focus: true
         model: items
         interactive: false
         currentIndex: -1
 
         highlight: Rectangle {
-            width: 100
+            width: grid.cellWidth
             height: width
             color: "lightsteelblue"
         }
 
         delegate: LetterCell {
-            width: 80
+            width: grid.cellWidth * 0.7
             height: width
             text: name.toUpperCase()
             multiplier: cell_multiplier
