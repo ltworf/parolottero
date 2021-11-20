@@ -165,7 +165,7 @@ languages = {
         letters=set('abcdefghilmnopqrstuvzwxyjk'),
         vowels=set('aeiou'),
         substitutions=set(),
-        wordlist=Path('/usr/share/dict/words'),
+        wordlist=Path('/usr/share/dict/american-english'),
     )
 }
 
