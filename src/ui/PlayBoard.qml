@@ -89,8 +89,6 @@ Item {
 
         header: RowLayout {
             width: parent.width
-            Layout.leftMargin: 5
-            Layout.rightMargin: 5
 
             Button {
                 text: qsTr("←")
@@ -122,6 +120,7 @@ Item {
                 radius: 10
                 Layout.preferredHeight: 30
                 Layout.preferredWidth: 30
+                Layout.rightMargin: 15
             }
         }
 
