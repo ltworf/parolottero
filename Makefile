@@ -1,5 +1,5 @@
 # parolottero
-# Copyright (C) 2021 Salvo "LtWorf" Tomaselli
+# Copyright (C) 2021-2022 Salvo "LtWorf" Tomaselli
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -16,8 +16,8 @@
 #
 # author Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
 
-.PHONY: all
-all: language_data/italian language_data/swedish language_data/american
+.PHONY: wordlists
+wordlists: language_data/italian language_data/swedish language_data/american
 
 dict:
 	mkdir -p dict
@@ -35,3 +35,25 @@ language_data/%: language_data dict/italian
 clean:
 	$(RM) -r language_data
 	$(RM) -r dict
+
+.PHONY: dist
+dist: wordlists
+	rm -rf /tmp/parolottero/
+	rm -rf /tmp/parolottero-*
+	mkdir /tmp/parolottero/
+	cp -R * /tmp/parolottero/
+	( \
+		cd /tmp; \
+		tar -zcf parolottero.tar.gz \
+			parolottero/dict \
+			parolottero/language_data \
+			parolottero/utils \
+			parolottero/src \
+			parolottero/Makefile \
+			parolottero/LICENSE \
+			parolottero/README.md \
+			parolottero/CHANGELOG \
+			parolottero/CODE_OF_CONDUCT.md \
+	)
+	mv /tmp/parolottero.tar.gz ./parolottero_`head -1 CHANGELOG`.orig.tar.gz
+	gpg --sign --armor --detach-sign ./parolottero_`head -1 CHANGELOG`.orig.tar.gz
