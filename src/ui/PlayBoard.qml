@@ -66,8 +66,8 @@ Item {
 
         header: RowLayout {
             width: parent.width
-            leftMargin: 5
-            rightMargin: 5
+            Layout.leftMargin: 5
+            Layout.rightMargin: 5
             Label {
                 text: board.last_word
                 color: board.last_score ? "green" : "red"
