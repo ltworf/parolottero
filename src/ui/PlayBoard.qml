@@ -90,9 +90,11 @@ Item {
             }
         }
 
-        footer: Label {
-            text: qsTr("Total: ") + board.total
-            font.pointSize: 30
+        footer: RowLayout {
+            Label {
+                text: qsTr("Total: ") + board.total
+                font.pointSize: 30
+            }
         }
 
         MouseArea {
