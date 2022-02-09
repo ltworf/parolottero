@@ -76,13 +76,14 @@ Item {
             }
 
             Text {
+                id: time_label
                 text: board.seconds_left
                 color: board.seconds_left > 60 ? "green" : (board.seconds_left > 30? "yellow": "red")
                 font.pointSize: 40
             }
 
             Rectangle {
-                color: board.seconds_left > 60 ? "green" : (board.seconds_left > 30? "yellow": "red")
+                color: time_label.color
                 radius: 10
                 Layout.preferredHeight: 30
                 Layout.preferredWidth: 30
