@@ -19,12 +19,19 @@
 .PHONY: all
 all: language_data/italian language_data/swedish language_data/american
 
+dict:
+	mkdir -p dict
+
+dict/italian: dict
+	wget https://github.com/napolux/paroleitaliane/raw/master/paroleitaliane/280000_parole_italiane.txt -O $@
+
 language_data:
 	mkdir language_data
 
-language_data/%: language_data
+language_data/%: language_data dict/italian
 	utils/lang_init.py `basename $@` $@ $@.wordlist
 
 .PHONY: clean
 clean:
 	$(RM) -r language_data
+	$(RM) -r dict
