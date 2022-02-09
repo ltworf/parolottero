@@ -37,7 +37,13 @@ def scan_language(language: Language) -> set[str]:
     Load a language, returns a set of playable words
     '''
     words = set()
-    with open(language.wordlist, 'rb') as f:
+
+    wordlist = language.wordlist
+    wordlist = 'dict' / language.wordlist
+    if not wordlist.exists():
+        wordlist = '/usr/share/' / wordlist
+
+    with open(wordlist, 'rb') as f:
         for binaryword in f.readlines():
             try:
                 word = binaryword.decode(language.encoding)
@@ -150,14 +156,14 @@ languages = {
             ('ò', 'o'),
             ('ù', 'u'),
         },
-        wordlist=Path('/usr/share/dict/italian'),
+        wordlist=Path('italian'),
     ),
     'swedish': Language(
         name='Svenska',
         letters=set('abcdefghjkilmnopqrstuvwxyzäöå'),
         vowels=set('aeiouäöå'),
         substitutions=set(),
-        wordlist=Path('/usr/share/dict/swedish'),
+        wordlist=Path('swedish'),
         encoding='iso-8859-15',
     ),
     'american': Language(
@@ -165,7 +171,7 @@ languages = {
         letters=set('abcdefghilmnopqrstuvzwxyjk'),
         vowels=set('aeiou'),
         substitutions=set(),
-        wordlist=Path('/usr/share/dict/american-english'),
+        wordlist=Path('american-english'),
     )
 }
 
