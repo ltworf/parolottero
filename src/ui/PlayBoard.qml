@@ -9,12 +9,15 @@ Item {
     property alias playable: board.playable
     property alias seed: board.seed
     property int duration: 3
+    property bool match_in_progress: false
 
     onPlayableChanged: {
         items.clear();
         if (! playable) {
             return;
         }
+
+        match_in_progress = true
 
         for (var i=0; i < board.size; i++) {
             items.append({index: i, name: board.get_letter(i), cell_multiplier: board.get_multiplier(i)})
@@ -68,6 +71,18 @@ Item {
             width: parent.width
             Layout.leftMargin: 5
             Layout.rightMargin: 5
+
+            Button {
+                text: qsTr("←")
+                onClicked: {
+                    board.last_word = ""
+                    board.current_word_indexes = []
+                    board.last_score = 0
+                    board.seconds_left = -1
+                    match_in_progress = false
+                }
+            }
+
             Label {
                 text: board.last_word
                 color: board.last_score ? "green" : "red"

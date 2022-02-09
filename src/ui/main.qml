@@ -12,16 +12,22 @@ Window {
     LangSelector {
         id: language_selector
         anchors.fill: parent
-        visible: !board.playable
+        visible: !board.match_in_progress
     }
 
     PlayBoard {
         id: board
         anchors.fill: parent
         language_id: language_selector.language_index
-        visible: board.playable
+        visible: board.match_in_progress
         seed: language_selector.seed
         duration: language_selector.duration
+
+        onMatch_in_progressChanged: {
+            // Reset language index after a match
+            if (board.match_in_progress == false)
+                language_selector.language_index = -1
+        }
     }
 
     Settings {
