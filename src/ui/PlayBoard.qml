@@ -100,7 +100,7 @@ Item {
             hoverEnabled: true
 
             onPressed: {
-                mouse.accepted = true;
+                mouse.accepted = false;
 
                 if (board.seconds_left == 0)
                     return;
@@ -114,10 +114,11 @@ Item {
                 board.current_word_indexes = [index];
                 grid.currentIndex = index;
                 grid.itemAtIndex(index).used = true;
+                mouse.accepted = true;
             }
 
             onReleased: {
-                mouse.accepted = true;
+                mouse.accepted = board.seconds_left > 0;
                 for (var i = 0; i < board.size; i++) {
                     grid.itemAtIndex(i).used = false;
                 }
