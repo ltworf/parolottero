@@ -24,7 +24,7 @@ import QtQuick.Layouts 1.12
 
 ColumnLayout{
     property int language_index: -1
-    property alias seed: spinseed.text
+    property alias seed: spinseed.value
     property alias duration: durationspin.value
     spacing: 2
 
@@ -64,11 +64,12 @@ ColumnLayout{
             text: qsTr("Seed")
             Layout.fillWidth: true
         }
-        TextField {
+
+        SpinBox {
             id: spinseed
-            placeholderText: qsTr("Seed")
-            validator: IntValidator {bottom: 1; top: 100}
-            Layout.alignment: Qt.AlignRight
+            from: 1
+            to: 10000
+            editable: true
         }
 
         Label {
@@ -80,6 +81,7 @@ ColumnLayout{
             id: durationspin
             from: 1
             to: 10
+            editable: true
         }
 
     }
