@@ -1,5 +1,5 @@
 # parolottero
-# Copyright (C) 2021 Salvo "LtWorf" Tomaselli
+# Copyright (C) 2021-2022 Salvo "LtWorf" Tomaselli
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -16,7 +16,7 @@
 #
 # author Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
 
-QT       += core gui
+QT += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += quick
 
@@ -42,16 +42,25 @@ TRANSLATIONS += \
 CONFIG += lrelease
 CONFIG += embed_translations
 
-# Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
-!isEmpty(target.path): INSTALLS += target
+
+isEmpty(target.path) {
+    target.path = $${DESTDIR}/usr/games
+    export(target.path)
+}
+INSTALLS += target
+
+launcher.files = extras/parolottero.desktop
+launcher.path = $${DESTDIR}/usr/share/applications/
+INSTALLS += launcher
+
+export(INSTALLS)
 
 DISTFILES += \
     ui/LangSelector.qml \
     ui/LetterCell.qml \
     ui/PlayBoard.qml \
     ui/main.qml \
-    ui/main_copy.qml
+    ui/main_copy.qml \
+    extras*
 
 RESOURCES += qml.qrc
