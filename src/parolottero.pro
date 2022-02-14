@@ -53,6 +53,10 @@ launcher.files = extras/parolottero.desktop
 launcher.path = $${DESTDIR}/usr/share/applications/
 INSTALLS += launcher
 
+data.files = ../language_data/*
+data.path = $${DESTDIR}/usr/share/games/parolottero/language_data/
+INSTALLS += data
+
 export(INSTALLS)
 
 DISTFILES += \
