@@ -45,7 +45,6 @@ dist: wordlists
 	( \
 		cd /tmp; \
 		tar -zcf parolottero.tar.gz \
-			parolottero/dict \
 			parolottero/language_data \
 			parolottero/utils \
 			parolottero/src \
@@ -57,3 +56,14 @@ dist: wordlists
 	)
 	mv /tmp/parolottero.tar.gz ./parolottero_`head -1 CHANGELOG`.orig.tar.gz
 	gpg --sign --armor --detach-sign ./parolottero_`head -1 CHANGELOG`.orig.tar.gz
+
+.PHONY: deb-pkg
+deb-pkg: dist
+	$(RM) -r /tmp/parolottero*
+	mv parolottero*orig* /tmp
+	cd /tmp; tar -xf parolottero*orig*.gz
+	cp -r debian /tmp/parolottero/
+	cd /tmp/parolottero; dpkg-buildpackage --changes-option=-S
+	mkdir -p deb-pkg
+	mv /tmp/parolottero*.* deb-pkg
+	lintian --pedantic -E --color auto -i -I deb-pkg/*changes deb-pkg/*deb
