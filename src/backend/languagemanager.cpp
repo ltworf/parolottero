@@ -19,20 +19,33 @@ author Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
 */
 
 #include "languagemanager.h"
+#include <QDir>
 #include <QFile>
+#include <QStandardPaths>
+
+#include <QDebug>
 
 QStringList LanguageManager::languages() {
     QStringList r;
-    r.append("italian");
-    r.append("swedish");
-    r.append("american");
+
+    //FIXME find also in the user home
+    auto dir = QDir("/usr/share/games/parolottero/language_data");
+    dir.setFilter(QDir::Files);
+    dir.setSorting(QDir::Name | QDir::IgnoreCase);
+    QFileInfoList list = dir.entryInfoList();
+    for (int i = 0 ; i < list.size(); i++) {
+        QFileInfo fileinfo = list.at(i);
+        if (fileinfo.fileName().endsWith(".wordlist"))
+            continue;
+        r.append(fileinfo.fileName());
+    }
     return r;
 }
 
 Language* LanguageManager::get_language(unsigned int id, QObject* parent) {
     auto langname = this->languages()[id];
-    QFile ldef("/home/salvo/dev/parolottero/language_data/" + langname);
-    QFile wlist("/home/salvo/dev/parolottero/language_data/" + langname + ".wordlist");
+    QFile ldef("/usr/share/games/parolottero/language_data/" + langname);
+    QFile wlist("/usr/share/games/parolottero/language_data/" + langname + ".wordlist");
     Language* l = new Language(ldef, wlist, parent);
     return l;
 }
