@@ -1,0 +1,8 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Author: Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
+Source: https://ltworf.github.io/parolottero/
+
+Files: *
+Copyright: © 2021-2022 Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>,
+License: AGPL-3+
+ TODO
