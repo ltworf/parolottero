@@ -1,0 +1,12 @@
+#!/usr/bin/make -f
+
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+export QT_SELECT=5
+
+
+%:
+	dh $@ --sourcedir=src
+
+override_dh_missing:
+	# Bah
+	true
