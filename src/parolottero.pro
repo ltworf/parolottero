@@ -57,6 +57,10 @@ launcher.files = extras/parolottero.desktop
 launcher.path = $${DESTDIR}/usr/share/applications/
 INSTALLS += launcher
 
+icon.files = extras/parolottero.svg
+icon.path = $${DESTDIR}/usr/share/icons/hicolor/48x48/apps/
+INSTALLS += icon
+
 data.files = ../language_data/*
 data.path = $${DESTDIR}/usr/share/games/parolottero/language_data/
 INSTALLS += data
