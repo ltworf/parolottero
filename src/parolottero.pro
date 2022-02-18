@@ -30,6 +30,7 @@ SOURCES += \
     backend/boardmanager.cpp \
     backend/language.cpp \
     backend/languagemanager.cpp \
+    backend/scoreboard.cpp \
     backend/scoreboarditem.cpp \
     main.cpp
 
@@ -37,6 +38,7 @@ HEADERS += \
     backend/boardmanager.h \
     backend/language.h \
     backend/languagemanager.h \
+    backend/scoreboard.h \
     backend/scoreboarditem.h
 
 TRANSLATIONS += \
