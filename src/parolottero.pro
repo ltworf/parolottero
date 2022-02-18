@@ -30,12 +30,14 @@ SOURCES += \
     backend/boardmanager.cpp \
     backend/language.cpp \
     backend/languagemanager.cpp \
+    backend/scoreboarditem.cpp \
     main.cpp
 
 HEADERS += \
     backend/boardmanager.h \
     backend/language.h \
-    backend/languagemanager.h
+    backend/languagemanager.h \
+    backend/scoreboarditem.h
 
 TRANSLATIONS += \
     parolottero_it_IT.ts
