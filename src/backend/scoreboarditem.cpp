@@ -20,8 +20,16 @@ author Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
 
 #include "scoreboarditem.h"
 
-ScoreboardItem::ScoreboardItem(QObject *parent)
-    : QObject{parent}
-{
+ScoreboardItem::ScoreboardItem(QString word, unsigned int points, QObject *parent): QObject{parent} {
+    this->word = word;
+    this->points = points;
+}
 
+
+unsigned int ScoreboardItem::get_points() {
+    return this->points;
+}
+
+QString ScoreboardItem::get_word() {
+    return this->word;
 }
