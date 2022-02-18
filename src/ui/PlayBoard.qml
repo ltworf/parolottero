@@ -101,10 +101,7 @@ Item {
                 }
             }
 
-            Label {
-                text: board.last_word
-                color: board.last_score ? "green" : "red"
-                font.pointSize: 30
+            Item {
                 Layout.fillWidth: true
             }
 
@@ -125,6 +122,14 @@ Item {
         }
 
         footer: RowLayout {
+            width: parent.width
+
+            Label {
+                text: board.last_word
+                color: board.last_score ? "green" : "red"
+                font.pointSize: 30
+                Layout.fillWidth: true
+            }
             Label {
                 text: qsTr("Total: ") + board.total
                 font.pointSize: 30
