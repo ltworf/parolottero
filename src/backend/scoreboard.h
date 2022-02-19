@@ -23,6 +23,7 @@ author Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
 
 #include <QObject>
 #include <QList>
+#include <QString>
 
 #include "scoreboarditem.h"
 
@@ -42,6 +43,8 @@ public slots:
     void clear();
     void addWord(QString word, unsigned int points);
     unsigned int get_size();
+    QString get_word(unsigned int);
+    unsigned int get_points(unsigned int);
 
 signals:
     void size_changed(unsigned int);

@@ -56,3 +56,11 @@ void Scoreboard::addWord(QString word, unsigned int points) {
 unsigned int Scoreboard::get_size() {
     return this->items.size();
 }
+
+QString Scoreboard::get_word(unsigned int i) {
+    return this->items[i]->get_word();
+}
+
+unsigned int Scoreboard::get_points(unsigned int i) {
+    return this->items[i]->get_points();
+}
