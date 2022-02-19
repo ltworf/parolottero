@@ -7,7 +7,7 @@ Build-Depends:
  qt5-qmake,
  qtbase5-dev,
  qtdeclarative5-dev
-Standards-Version: 4.5.1
+Standards-Version: 4.6.0
 Homepage: https://github.com/ltworf/parolottero
 Vcs-Browser: https://github.com/ltworf/parolottero
 Rules-Requires-Root: no
