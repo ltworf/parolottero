@@ -1,6 +1,6 @@
 /*
 parolottero
-Copyright (C) 2021 Salvo "LtWorf" Tomaselli
+Copyright (C) 2021-2022 Salvo "LtWorf" Tomaselli
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as
@@ -24,7 +24,7 @@ author Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
 #include <QObject>
 #include <QList>
 #include <QString>
-#include <QStringList>
+#include <QSet>
 
 #include "language.h"
 #include "scoreboard.h"
@@ -104,7 +104,7 @@ private:
     QList<unsigned int> multipliers;
     Scoreboard scoreboard;
 
-    QStringList words;
+    QSet<QString> words;
     unsigned int total = 0;
     unsigned int _seed = 0;
     int _language_index = -1;

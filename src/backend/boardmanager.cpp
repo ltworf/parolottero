@@ -1,6 +1,6 @@
 /*
 parolottero
-Copyright (C) 2021 Salvo "LtWorf" Tomaselli
+Copyright (C) 2021-2022 Salvo "LtWorf" Tomaselli
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as
@@ -98,7 +98,7 @@ unsigned int BoardManager::input_word(QList<unsigned int> cells) {
         return 0;
     }
 
-    this->words.append(word);
+    this->words.insert(word);
 
     if (this->language->is_word(word)) {
         this->total += score;
