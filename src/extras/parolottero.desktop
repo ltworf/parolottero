@@ -9,3 +9,4 @@ Type=Application
 Categories=Game;
 Keywords=Games
 X-Purism-FormFactor=Workstation;Mobile;
+StartupNotify=true
