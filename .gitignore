@@ -1,3 +1,5 @@
 language_data/
 *kdev4
 build-*
+deb-pkg/
+dict/
