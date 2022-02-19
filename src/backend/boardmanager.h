@@ -63,6 +63,12 @@ class BoardManager : public QObject
             READ get_size()
     )
 
+    Q_PROPERTY(
+            Scoreboard* scoreboard
+            READ get_scoreboard
+            CONSTANT
+    )
+
 public:
     explicit BoardManager(QObject *parent = nullptr);
 
@@ -82,6 +88,8 @@ public slots:
     bool get_playable();
 
     unsigned int get_size();
+
+    Scoreboard* get_scoreboard();
 
 signals:
     void seed_changed(unsigned int);

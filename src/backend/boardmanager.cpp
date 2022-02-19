@@ -228,3 +228,7 @@ bool BoardManager::are_adjacent(unsigned int a, unsigned int b) {
     return std::abs(col_a - col_b) < 2 && \
            std::abs(row_a - row_b) < 2;
 }
+
+Scoreboard* BoardManager::get_scoreboard() {
+    return &this->scoreboard;
+}
