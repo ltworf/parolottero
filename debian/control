@@ -14,5 +14,24 @@ Rules-Requires-Root: no
 
 Package: parolottero
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}, parolottero-data
+Suggests: parolottero-data-it, parolottero-data-us, parolottero-data-sv
 Description: Word game
+
+Package: parolottero-data-it
+Provides: parolottero-data
+Depends: ${misc:Depends}
+Architecture: all
+Description: Italian game files for Parolottero
+
+Package: parolottero-data-us
+Provides: parolottero-data
+Depends: ${misc:Depends}
+Architecture: all
+Description: American English game files for Parolottero
+
+Package: parolottero-data-sv
+Provides: parolottero-data
+Depends: ${misc:Depends}
+Architecture: all
+Description: Swedish game files for Parolottero
