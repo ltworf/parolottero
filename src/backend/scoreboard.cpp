@@ -30,6 +30,20 @@ void Scoreboard::clear() {
     this->items.clear();
 }
 
+/**
+ * @brief Scoreboard::addWord
+ *
+ * Adds the word to the list, sorting by points
+ *
+ * @param word
+ * @param points
+ */
 void Scoreboard::addWord(QString word, unsigned int points) {
-    this->items.append(new ScoreboardItem(word, points, this));
+    int i;
+    for (i = 0; i < items.size(); i++) {
+        if (points > this->items[i]->get_points())
+            break;
+    }
+
+    this->items.insert(i, new ScoreboardItem(word, points, this));
 }
