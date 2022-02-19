@@ -83,6 +83,21 @@ Item {
                 }
             }
 
+            Button {
+                text: qsTr("Scores")
+                onClicked: {
+                    // Update the scoreboard just if we are about to show it
+                    if (!scoreboard.visible) {
+                        scores.clear()
+                        for (var i=0; i < board.scoreboard.size; i++) {
+                            scores.append({word: board.scoreboard.get_word(i), points: board.scoreboard.get_points(i)})
+                        }
+                    }
+                    grid.visible = ! grid.visible
+                    scoreboard.visible = ! scoreboard.visible
+                }
+            }
+
             Item {
                 Layout.fillWidth: true
             }
@@ -108,6 +123,33 @@ Item {
             color: board.last_score ? "green" : "red"
             font.pointSize: 30
             Layout.fillWidth: true
+        }
+
+        ListView {
+            id: scoreboard
+            visible: false
+            Layout.alignment: Qt.AlignLeft
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+            Layout.margins: 5
+
+            model: scores
+
+            ListModel {
+                id: scores
+            }
+
+            delegate: RowLayout {
+                Label {
+                    text: points
+                    color: points ? "green": "red"
+                }
+                Label {
+                    text: word
+                    color: points ? "green": "red"
+                    width: height
+                }
+            }
         }
 
         GridView {
