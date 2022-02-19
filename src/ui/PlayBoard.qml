@@ -80,11 +80,14 @@ Item {
                     board.last_score = 0
                     board.seconds_left = -1
                     match_in_progress = false
+                    grid.visible = true
+                    scoreboard.visible = false
                 }
             }
 
             Button {
                 text: qsTr("Scores")
+                visible: board.seconds_left == 0
                 onClicked: {
                     // Update the scoreboard just if we are about to show it
                     if (!scoreboard.visible) {
@@ -123,6 +126,7 @@ Item {
             color: board.last_score ? "green" : "red"
             font.pointSize: 30
             Layout.fillWidth: true
+            visible: grid.visible
         }
 
         ListView {
@@ -250,6 +254,7 @@ Item {
 
         Item {
             Layout.fillHeight: true
+            visible: grid.visible
         }
 
         RowLayout {
