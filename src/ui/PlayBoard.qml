@@ -147,11 +147,13 @@ Item {
                 Label {
                     text: points
                     color: points ? "green": "red"
+                    font.pointSize: 24
                 }
                 Label {
                     text: word
                     color: points ? "green": "red"
-                    width: height
+                    width: height * 2
+                    font.pointSize: 24
                 }
             }
         }
