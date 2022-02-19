@@ -29,13 +29,22 @@ author Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
 class Scoreboard : public QObject
 {
     Q_OBJECT
+
+    Q_PROPERTY(
+            unsigned int size
+            READ get_size
+            NOTIFY size_changed
+    )
+
 public:
     explicit Scoreboard(QObject *parent = nullptr);
 public slots:
     void clear();
     void addWord(QString word, unsigned int points);
+    unsigned int get_size();
 
 signals:
+    void size_changed(unsigned int);
 
 private:
     QList<ScoreboardItem*> items;

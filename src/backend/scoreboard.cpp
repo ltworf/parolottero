@@ -27,7 +27,11 @@ Scoreboard::Scoreboard(QObject *parent)
 }
 
 void Scoreboard::clear() {
+    for (int i = 0; i < items.size(); i++) {
+        delete items[i];
+    }
     this->items.clear();
+    emit this->size_changed(0);
 }
 
 /**
@@ -46,4 +50,9 @@ void Scoreboard::addWord(QString word, unsigned int points) {
     }
 
     this->items.insert(i, new ScoreboardItem(word, points, this));
+    emit this->size_changed(this->items.size());
+}
+
+unsigned int Scoreboard::get_size() {
+    return this->items.size();
 }
