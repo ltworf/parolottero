@@ -31,7 +31,7 @@ void BoardManager::init() {
         delete this->language;
         this->language = nullptr;
     }
-
+    this->scoreboard.clear();
     this->multipliers.clear();
     this->letters.clear();
     this->words.clear();
@@ -97,13 +97,18 @@ unsigned int BoardManager::input_word(QList<unsigned int> cells) {
     if (words.contains(word)) {
         return 0;
     }
+
+    this->words.append(word);
+
     if (this->language->is_word(word)) {
         this->total += score;
-        this->words.append(word);
         emit total_changed(this->total);
-        return score;
-    }
-    return 0;
+    } else
+        score = 0;
+
+    this->scoreboard.addWord(word, score);
+
+    return score;
 }
 
 /**

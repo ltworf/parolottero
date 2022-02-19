@@ -27,6 +27,7 @@ author Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
 #include <QStringList>
 
 #include "language.h"
+#include "scoreboard.h"
 
 class BoardManager : public QObject
 {
@@ -93,6 +94,7 @@ private:
     Language* language = nullptr;
     QList<QString> letters;
     QList<unsigned int> multipliers;
+    Scoreboard scoreboard;
 
     QStringList words;
     unsigned int total = 0;
