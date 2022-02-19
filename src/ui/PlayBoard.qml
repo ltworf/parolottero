@@ -65,30 +65,12 @@ Item {
         id: items
     }
 
-    GridView {
-        id: grid
+    ColumnLayout {
         anchors.fill: parent
-        cellWidth: width / 4
-        cellHeight: cellWidth
-        model: items
-        interactive: false
-        currentIndex: -1
 
-        highlight: Rectangle {
-            width: grid.cellWidth
-            height: width
-            color: "lightsteelblue"
-        }
-
-        delegate: LetterCell {
-            width: grid.cellWidth * 0.7
-            height: width
-            text: name.toUpperCase()
-            multiplier: cell_multiplier
-        }
-
-        header: RowLayout {
+        RowLayout {
             width: parent.width
+            id: header
 
             Button {
                 text: qsTr("←")
@@ -121,85 +103,121 @@ Item {
             }
         }
 
-        footer: RowLayout {
+        Label {
+            text: board.last_word
+            color: board.last_score ? "green" : "red"
+            font.pointSize: 30
+            Layout.fillWidth: true
+        }
+
+        GridView {
+            id: grid
+            Layout.preferredWidth: parent.width - 20 // 20 is the margin
+            Layout.preferredHeight: width
+            Layout.minimumWidth: 4 * 80
+            Layout.minimumHeight: 4 * 80
+            Layout.leftMargin: 20
+            //Layout.maximumHeight: parent.height - footer.height - header.height
+
+            cellWidth: width / 4
+            cellHeight: cellWidth
+
+
+            model: items
+            interactive: false
+            currentIndex: -1
+
+            highlight: Rectangle {
+                width: grid.cellWidth
+                height: width
+                color: "lightsteelblue"
+            }
+
+            delegate: LetterCell {
+                width: grid.cellWidth * 0.7
+                height: width
+                text: name.toUpperCase()
+                multiplier: cell_multiplier
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                hoverEnabled: true
+
+                onPressed: {
+                    mouse.accepted = false;
+
+                    if (board.seconds_left == 0)
+                        return;
+                    else if (board.seconds_left == -1)
+                        board.seconds_left = duration * 60
+
+                    var index = find_item_index(mouse.x, mouse.y);
+                    if (index < 0)
+                        return;
+
+                    board.current_word_indexes = [index];
+                    grid.currentIndex = index;
+                    grid.itemAtIndex(index).used = true;
+                    mouse.accepted = true;
+                }
+
+                onReleased: {
+                    mouse.accepted = board.seconds_left > 0;
+                    for (var i = 0; i < board.size; i++) {
+                        grid.itemAtIndex(i).used = false;
+                    }
+                    board.last_score = board.input_word(board.current_word_indexes);
+
+                    var word = "";
+                    for (i=0; i < board.current_word_indexes.length; i++) {
+                        word += items.get(board.current_word_indexes[i]).name;
+                    }
+                    board.last_word = word;
+
+                    grid.currentIndex = -1;
+                }
+
+                onPositionChanged : {
+                    mouse.accepted = true;
+
+                    if (mouse.buttons == 0 || board.seconds_left == 0)
+                        return;
+
+                    var index = find_item_index(mouse.x, mouse.y);
+                    if (index < 0 || grid.itemAtIndex(index).used)
+                        return;
+                    if (! board.are_adjacent(index, board.current_word_indexes[board.current_word_indexes.length - 1]))
+                        return;
+                    grid.itemAtIndex(index).used = true;
+                    grid.currentIndex = index;
+                    board.current_word_indexes.push(index);
+                }
+
+                function find_item_index(x, y) {
+                    for (var i=0; i < board.size; i++) {
+                        var item = grid.itemAtIndex(i);
+                        var point = mapToItem(item, x, y);
+                        if (item.contains(point))
+                            return i;
+                    }
+                    return -1;
+                }
+            }
+        }
+
+        Item {
+            Layout.fillHeight: true
+        }
+
+        RowLayout {
+            id: footer
             width: parent.width
 
-            Label {
-                text: board.last_word
-                color: board.last_score ? "green" : "red"
-                font.pointSize: 30
-                Layout.fillWidth: true
-            }
             Label {
                 text: qsTr("Total: ") + board.total
                 font.pointSize: 30
             }
         }
-
-        MouseArea {
-            anchors.fill: parent
-            hoverEnabled: true
-
-            onPressed: {
-                mouse.accepted = false;
-
-                if (board.seconds_left == 0)
-                    return;
-                else if (board.seconds_left == -1)
-                    board.seconds_left = duration * 60
-
-                var index = find_item_index(mouse.x, mouse.y);
-                if (index < 0)
-                    return;
-
-                board.current_word_indexes = [index];
-                grid.currentIndex = index;
-                grid.itemAtIndex(index).used = true;
-                mouse.accepted = true;
-            }
-
-            onReleased: {
-                mouse.accepted = board.seconds_left > 0;
-                for (var i = 0; i < board.size; i++) {
-                    grid.itemAtIndex(i).used = false;
-                }
-                board.last_score = board.input_word(board.current_word_indexes);
-
-                var word = "";
-                for (i=0; i < board.current_word_indexes.length; i++) {
-                    word += items.get(board.current_word_indexes[i]).name;
-                }
-                board.last_word = word;
-
-                grid.currentIndex = -1;
-            }
-
-            onPositionChanged : {
-                mouse.accepted = true;
-
-                if (mouse.buttons == 0 || board.seconds_left == 0)
-                    return;
-
-                var index = find_item_index(mouse.x, mouse.y);
-                if (index < 0 || grid.itemAtIndex(index).used)
-                    return;
-                if (! board.are_adjacent(index, board.current_word_indexes[board.current_word_indexes.length - 1]))
-                    return;
-                grid.itemAtIndex(index).used = true;
-                grid.currentIndex = index;
-                board.current_word_indexes.push(index);
-            }
-
-            function find_item_index(x, y) {
-                for (var i=0; i < board.size; i++) {
-                    var item = grid.itemAtIndex(i);
-                    var point = mapToItem(item, x, y);
-                    if (item.contains(point))
-                        return i;
-                }
-                return -1;
-            }
-        }
-
     }
 }
