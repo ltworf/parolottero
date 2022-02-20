@@ -65,6 +65,10 @@ data.files = ../language_data/*
 data.path = $${DESTDIR}/usr/share/games/parolottero/language_data/
 INSTALLS += data
 
+manpage.files = extras/parolottero.6
+manpage.path = $${DESTDIR}/usr/share/man/man6/
+INSTALLS += manpage
+
 export(INSTALLS)
 
 DISTFILES += \
