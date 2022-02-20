@@ -1,5 +1,5 @@
-parolottero (1.0-1) UNRELEASED; urgency=medium
+parolottero (1.0-1) UNRELEASED; urgency=low
 
-  * Initial release. (Closes: #XXXXXX)
+  * Initial release. (Closes: #1006156)
 
  -- Salvo 'LtWorf' Tomaselli <tiposchi@tiscali.it>  Sat, 11 Sep 2021 19:56:31 +0200
