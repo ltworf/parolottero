@@ -15,7 +15,14 @@ Rules-Requires-Root: no
 
 Package: parolottero
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, parolottero-data
+Depends: ${shlibs:Depends},
+ ${misc:Depends},
+ parolottero-data,
+ qml-module-qt-labs-settings,
+ qml-module-qtquick-window2,
+ qml-module-qtquick-controls2,
+ qml-module-qtquick-layouts,
+ qml-module-qtquick2
 Suggests: parolottero-data-it, parolottero-data-us, parolottero-data-sv
 Description: Compose words using a 4x4 grid of letters
  A word game intended for touch screens.
