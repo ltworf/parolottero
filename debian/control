@@ -16,22 +16,36 @@ Package: parolottero
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, parolottero-data
 Suggests: parolottero-data-it, parolottero-data-us, parolottero-data-sv
-Description: Word game
+Description: Word composition game
+ Players must drag their finger (or mouse) over random letters in a 4x4 grid
+ to compose as many words as they can, until the time runs out.
 
 Package: parolottero-data-it
 Provides: parolottero-data
 Depends: ${misc:Depends}
 Architecture: all
-Description: Italian game files for Parolottero
+Description: Word composition game, Italian game files
+ Players must drag their finger (or mouse) over random letters in a 4x4 grid
+ to compose as many words as they can, until the time runs out.
+ .
+ This package contains the data files to play with Italian words.
 
 Package: parolottero-data-us
 Provides: parolottero-data
 Depends: ${misc:Depends}
 Architecture: all
-Description: American English game files for Parolottero
+Description: Word composition game, American English game files
+ Players must drag their finger (or mouse) over random letters in a 4x4 grid
+ to compose as many words as they can, until the time runs out.
+ .
+ This package contains the data files to play with US English words.
 
 Package: parolottero-data-sv
 Provides: parolottero-data
 Depends: ${misc:Depends}
 Architecture: all
-Description: Swedish game files for Parolottero
+Description: Word composition game, Swedish game files
+ Players must drag their finger (or mouse) over random letters in a 4x4 grid
+ to compose as many words as they can, until the time runs out.
+ .
+ This package contains the data files to play with Swedish words.
