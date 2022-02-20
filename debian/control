@@ -24,7 +24,7 @@ Description: Compose words using a 4x4 grid of letters
 
 Package: parolottero-data-it
 Provides: parolottero-data
-Depends: ${misc:Depends}
+Depends: ${misc:Depends}, parolottero
 Architecture: all
 Description: Compose words using a 4x4 grid of letters, Italian game files
  A word game intended for touch screens.
@@ -36,7 +36,7 @@ Description: Compose words using a 4x4 grid of letters, Italian game files
 
 Package: parolottero-data-us
 Provides: parolottero-data
-Depends: ${misc:Depends}
+Depends: ${misc:Depends}, parolottero
 Architecture: all
 Description: Compose words using a 4x4 grid of letters, US English game files
  A word game intended for touch screens.
@@ -48,7 +48,7 @@ Description: Compose words using a 4x4 grid of letters, US English game files
 
 Package: parolottero-data-sv
 Provides: parolottero-data
-Depends: ${misc:Depends}
+Depends: ${misc:Depends}, parolottero
 Architecture: all
 Description: Compose words using a 4x4 grid of letters, Swedish game files
  A word game intended for touch screens.
