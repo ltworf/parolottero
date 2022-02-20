@@ -16,7 +16,9 @@ Package: parolottero
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, parolottero-data
 Suggests: parolottero-data-it, parolottero-data-us, parolottero-data-sv
-Description: Word composition game
+Description: Compose words using a 4x4 grid of letters
+ A word game intended for touch screens.
+ .
  Players must drag their finger (or mouse) over random letters in a 4x4 grid
  to compose as many words as they can, until the time runs out.
 
@@ -24,7 +26,9 @@ Package: parolottero-data-it
 Provides: parolottero-data
 Depends: ${misc:Depends}
 Architecture: all
-Description: Word composition game, Italian game files
+Description: Compose words using a 4x4 grid of letters, Italian game files
+ A word game intended for touch screens.
+ .
  Players must drag their finger (or mouse) over random letters in a 4x4 grid
  to compose as many words as they can, until the time runs out.
  .
@@ -34,7 +38,9 @@ Package: parolottero-data-us
 Provides: parolottero-data
 Depends: ${misc:Depends}
 Architecture: all
-Description: Word composition game, American English game files
+Description: Compose words using a 4x4 grid of letters, US English game files
+ A word game intended for touch screens.
+ .
  Players must drag their finger (or mouse) over random letters in a 4x4 grid
  to compose as many words as they can, until the time runs out.
  .
@@ -44,7 +50,9 @@ Package: parolottero-data-sv
 Provides: parolottero-data
 Depends: ${misc:Depends}
 Architecture: all
-Description: Word composition game, Swedish game files
+Description: Compose words using a 4x4 grid of letters, Swedish game files
+ A word game intended for touch screens.
+ .
  Players must drag their finger (or mouse) over random letters in a 4x4 grid
  to compose as many words as they can, until the time runs out.
  .
