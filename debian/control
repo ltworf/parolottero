@@ -6,6 +6,7 @@ Build-Depends:
  debhelper-compat (= 13),
  qt5-qmake,
  qtbase5-dev,
+ qttools5-dev-tools,
  qtdeclarative5-dev
 Standards-Version: 4.6.0
 Homepage: https://github.com/ltworf/parolottero
