@@ -44,7 +44,7 @@ dist: wordlists
 	cp -R * /tmp/parolottero/
 	( \
 		cd /tmp; \
-		tar -zcf parolottero.tar.gz \
+		tar --exclude '*.user' -zcf parolottero.tar.gz \
 			parolottero/language_data \
 			parolottero/utils \
 			parolottero/src \
