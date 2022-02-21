@@ -3,8 +3,4 @@
 export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 
 %:
-	dh $@ --sourcedir=src
-
-override_dh_missing:
-	# Workaround https://bugs.debian.org/964230
-	dh_missing -O--sourcedir=.
+	dh $@ --sourcedirectory=src
