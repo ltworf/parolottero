@@ -26,10 +26,21 @@ author Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
 #include <QDebug>
 
 QStringList LanguageManager::languages() {
-    QStringList r;
+  return this->languagenames;
+}
 
+Language* LanguageManager::get_language(unsigned int id, QObject* parent) {
+    auto langname = this->languages()[id];
+    QFile ldef(this->languagefilenames.at(id));
+    QFile wlist(this->languagefilenames.at(id) + ".wordlist");
+    Language* l = new Language(ldef, wlist, parent);
+    return l;
+}
+
+LanguageManager::LanguageManager(QObject *parent) : QObject(parent) {
     //FIXME find also in the user home
-    auto dir = QDir("/usr/share/games/parolottero/language_data");
+    auto dir = QDir("/usr/share/games/parolottero/language_data/");
+
     dir.setFilter(QDir::Files);
     dir.setSorting(QDir::Name | QDir::IgnoreCase);
     QFileInfoList list = dir.entryInfoList();
@@ -37,18 +48,12 @@ QStringList LanguageManager::languages() {
         QFileInfo fileinfo = list.at(i);
         if (fileinfo.fileName().endsWith(".wordlist"))
             continue;
-        r.append(fileinfo.fileName());
+        this->languagefilenames.append(fileinfo.absoluteFilePath());
+
+        QFile ldef(fileinfo.absoluteFilePath());
+        ldef.open(QIODevice::ReadOnly);
+        this->languagenames.append(QString(ldef.readLine(120)).trimmed());
+        ldef.close();
     }
-    return r;
-}
 
-Language* LanguageManager::get_language(unsigned int id, QObject* parent) {
-    auto langname = this->languages()[id];
-    QFile ldef("/usr/share/games/parolottero/language_data/" + langname);
-    QFile wlist("/usr/share/games/parolottero/language_data/" + langname + ".wordlist");
-    Language* l = new Language(ldef, wlist, parent);
-    return l;
-}
-
-LanguageManager::LanguageManager(QObject *parent) : QObject(parent) {
 }
