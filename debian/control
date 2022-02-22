@@ -23,6 +23,8 @@ Depends: ${shlibs:Depends},
  qml-module-qtquick-controls2,
  qml-module-qtquick-layouts,
  qml-module-qtquick2
+Recommends:
+ qtwayland5
 Suggests: parolottero-data-it, parolottero-data-us, parolottero-data-sv
 Description: Compose words using a 4x4 grid of letters
  A word game intended for touch screens.
