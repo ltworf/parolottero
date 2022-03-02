@@ -69,6 +69,13 @@ class BoardManager : public QObject
             CONSTANT
     )
 
+    Q_PROPERTY(
+            bool use_seed
+            READ get_use_seed()
+            WRITE set_use_seed()
+            NOTIFY use_seed_changed
+    )
+
 public:
     explicit BoardManager(QObject *parent = nullptr);
 
@@ -82,6 +89,9 @@ public slots:
     void set_seed(unsigned int);
     unsigned int get_seed();
 
+    void set_use_seed(bool);
+    bool get_use_seed();
+
     void set_language(int);
     int get_language();
 
@@ -93,6 +103,7 @@ public slots:
 
 signals:
     void seed_changed(unsigned int);
+    void use_seed_changed(bool);
     void language_changed(int);
     void total_changed(unsigned int);
     void playable_changed(bool);
@@ -107,6 +118,7 @@ private:
     QSet<QString> words;
     unsigned int total = 0;
     unsigned int _seed = 0;
+    bool use_seed = false;
     int _language_index = -1;
 
     unsigned int rows = 4;

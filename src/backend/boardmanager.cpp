@@ -250,3 +250,20 @@ bool BoardManager::are_adjacent(unsigned int a, unsigned int b) {
 Scoreboard* BoardManager::get_scoreboard() {
     return &this->scoreboard;
 }
+
+void BoardManager::set_use_seed(bool a) {
+    if (a == this->use_seed)
+        return;
+    this->use_seed = a;
+    emit use_seed_changed(a);
+}
+
+/**
+ * this defines if the seed property is used or ignored
+ *
+ * @brief BoardManager::get_use_seed
+ * @return
+ */
+bool BoardManager::get_use_seed() {
+    return this->use_seed;
+}
