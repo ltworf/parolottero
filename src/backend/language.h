@@ -41,10 +41,11 @@ public:
 public slots:
     bool is_word(QString word);
     int get_score(QString letter);
-    QStringList get_words();
+    QStringList get_long_words();
 
 private:
     QSet<QString> words;
+    QStringList longwordslist;
     QMap<QString, unsigned int> score;
     void load_langfile(QFile &file);
 

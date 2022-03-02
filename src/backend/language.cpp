@@ -48,7 +48,7 @@ static QString read_and_strip(QFile &file) {
  *
  * Loads the wordlist file into a QSet
  */
-void wordlistload(QFile &file, QSet<QString> &dest_set) {
+void wordlistload(QFile &file, QSet<QString> &dest_set, QStringList &dest_list) {
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         //TODO error
     }
@@ -60,6 +60,8 @@ void wordlistload(QFile &file, QSet<QString> &dest_set) {
         if (word.size() == 0)
             break;
         dest_set.insert(word);
+        if (word.length() >= 5 )
+            dest_list.append(word);
         c++;
     }
     qDebug() << "Loaded words" << c;
@@ -98,7 +100,7 @@ void Language::load_langfile(QFile &file) {
  * Class representing a language.
  */
 Language::Language(QFile &langfile, QFile &wordlist, QObject *parent) : QObject(parent) {
-    wordlistload(wordlist, this->words);
+    wordlistload(wordlist, this->words, this->longwordslist);
     this->load_langfile(langfile);
 }
 
@@ -131,6 +133,15 @@ int Language::get_score(QString letter) {
     return this->score[letter];
 }
 
-QStringList Language::get_words() {
-    return this->words.values();
+/**
+ *
+ * Returns a list of the long words in the language.
+ *
+ * Currently long words have to be at least 6 letters.
+ *
+ * @brief Language::get_long_words
+ * @return
+ */
+QStringList Language::get_long_words() {
+    return this->longwordslist;
 }

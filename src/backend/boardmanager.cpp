@@ -46,9 +46,6 @@ void BoardManager::init() {
     this->language = this->lang_magr.get_language(this->_language_index);
 
     //init board
-
-    QStringList words = this->language->get_words();
-
     QRandomGenerator* rand;
     if (this->use_seed) {
         QRandomGenerator rng(this->_seed);
@@ -59,12 +56,10 @@ void BoardManager::init() {
 
     int seedcount = 0;
     QList<QChar> accumulator;
-
+    QStringList words = this->language->get_long_words();
     while (seedcount < 10) {
         int index = rand->bounded(words.length());
         QString w = words[index];
-        if (w.length() < 5)
-            continue; // Skip short word
         seedcount ++;
         for (int i = 0; i < w.length(); i++)
             accumulator.append(w[i]);
