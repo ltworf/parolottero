@@ -52,7 +52,14 @@ void BoardManager::init() {
     //init board
 
     QStringList words = this->language->get_words();
-    QRandomGenerator* rand = QRandomGenerator::system();
+
+    QRandomGenerator* rand;
+    if (this->use_seed) {
+        QRandomGenerator rng(this->_seed);
+        rand = &rng;
+    } else {
+        rand = QRandomGenerator::system();
+    }
 
     int seedcount = 0;
     QList<QChar> accumulator;
