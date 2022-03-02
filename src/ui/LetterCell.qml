@@ -25,8 +25,13 @@ Rectangle {
     property int multiplier: 1
     property string text: ""
     border.width: 3
-    border.color: (multiplier == 1) ? "light gray" : ((multiplier == 2) ? "yellow": "red")
-    color: used ? "gray": "transparent"
+
+    border.color: (multiplier == 1) ? "light steel blue" : ((multiplier == 2) ? "yellow": "pink")
+
+    gradient: Gradient {
+        GradientStop { position: 0.0; color: used ? "steel blue": border.color }
+        GradientStop { position: 1.0; color: used ? "light gray": "white" }
+    }
 
     Text {
         anchors.centerIn: parent
