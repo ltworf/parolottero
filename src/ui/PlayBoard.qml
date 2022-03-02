@@ -28,6 +28,7 @@ Item {
     property alias language_id: board.language
     property alias playable: board.playable
     property alias seed: board.seed
+    property alias use_seed: board.use_seed
     property int duration: 3
     property bool match_in_progress: false
 
