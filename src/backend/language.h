@@ -1,6 +1,6 @@
 /*
 parolottero
-Copyright (C) 2021 Salvo "LtWorf" Tomaselli
+Copyright (C) 2021-2022 Salvo "LtWorf" Tomaselli
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as
@@ -27,19 +27,21 @@ author Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
 #include <QFile>
 #include <QMap>
 #include <QList>
+#include <QStringList>
 
 class Language : public QObject
 {
     Q_OBJECT
 public:
     explicit Language(QFile &langfile, QFile &wordlist, QObject *parent = nullptr);
-    QList<QString> letters;
-    QList<QString> vowels;
+    QStringList letters;
+    QStringList vowels;
     QString name;
 
 public slots:
     bool is_word(QString word);
     int get_score(QString letter);
+    QStringList get_words();
 
 private:
     QSet<QString> words;

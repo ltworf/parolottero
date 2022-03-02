@@ -1,6 +1,6 @@
 /*
 parolottero
-Copyright (C) 2021 Salvo "LtWorf" Tomaselli
+Copyright (C) 2021-2022 Salvo "LtWorf" Tomaselli
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as
@@ -129,4 +129,8 @@ int Language::get_score(QString letter) {
     if (!this->score.contains(letter))
         return -1;
     return this->score[letter];
+}
+
+QStringList Language::get_words() {
+    return this->words.values();
 }
