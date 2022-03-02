@@ -41,6 +41,7 @@ Window {
         language_id: language_selector.language_index
         visible: board.match_in_progress
         seed: language_selector.seed
+        use_seed: language_selector.use_seed
         duration: language_selector.duration
 
         onMatch_in_progressChanged: {
@@ -54,6 +55,7 @@ Window {
         id: settings
         property alias duration: language_selector.duration
         property alias seed: language_selector.seed
+        property alias use_seed: language_selector.use_seed
         property alias x: main_window.x
         property alias y: main_window.y
         property alias width: main_window.width
