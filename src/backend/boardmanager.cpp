@@ -18,7 +18,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 author Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
 */
 
-#include <stdlib.h>
+#include <QRandomGenerator>
+
 #include "boardmanager.h"
 #include "languagemanager.h"
 
@@ -49,13 +50,30 @@ void BoardManager::init() {
     this->language = lang_magr.get_language(this->_language_index, this);
 
     //init board
-    //Give vowels double chances to appear
-    QStringList morevowels = language->letters + language->vowels;
-    int lcount = morevowels.size();
+
+    QStringList words = this->language->get_words();
+    QRandomGenerator* rand = QRandomGenerator::system();
+
+    int seedcount = 0;
+    QList<QChar> accumulator;
+
+    while (seedcount < 10) {
+        int index = rand->bounded(words.length());
+        QString w = words[index];
+        if (w.length() < 5)
+            continue; // Skip short word
+        seedcount ++;
+        for (int i = 0; i < w.length(); i++)
+            accumulator.append(w[i]);
+    }
+
     for (unsigned int i = 0; i < this->get_size(); i++) {
-        this->letters.append(morevowels[rand_r(&(this->_seed)) % lcount]);
+        int r = rand->bounded(accumulator.length());
+        this->letters.append(accumulator[r]);
+        accumulator.removeAt(r);
+
         unsigned int multiplier;
-        switch (rand_r(&(this->_seed)) % 10) {
+        switch (rand->bounded(10)) {
             case 3:
                 multiplier = 3;
                 break;
