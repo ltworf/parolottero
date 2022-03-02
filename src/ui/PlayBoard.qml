@@ -176,11 +176,6 @@ Item {
             interactive: false
             currentIndex: -1
 
-            highlight: Rectangle {
-                width: grid.cellWidth
-                height: width
-                color: "lightsteelblue"
-            }
 
             delegate: LetterCell {
                 width: grid.cellWidth * 0.7
