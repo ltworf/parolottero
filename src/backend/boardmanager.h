@@ -27,6 +27,7 @@ author Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
 #include <QSet>
 
 #include "language.h"
+#include "languagemanager.h"
 #include "scoreboard.h"
 
 class BoardManager : public QObject
@@ -110,6 +111,7 @@ signals:
 
 private:
     void init();
+    LanguageManager lang_magr;
     Language* language = nullptr;
     QList<QString> letters;
     QList<unsigned int> multipliers;

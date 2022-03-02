@@ -1,6 +1,6 @@
 /*
 parolottero
-Copyright (C) 2021 Salvo "LtWorf" Tomaselli
+Copyright (C) 2021-2022 Salvo "LtWorf" Tomaselli
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as
@@ -29,11 +29,38 @@ QStringList LanguageManager::languages() {
   return this->languagenames;
 }
 
-Language* LanguageManager::get_language(unsigned int id, QObject* parent) {
+/**
+ *
+ * Returns a pointer to a Language object that is valid until:
+ *
+ * the parent LanguageManager exists AND
+ * get_language is called again
+ *
+ * @brief LanguageManager::get_language
+ * @param id
+ * @return
+ */
+Language* LanguageManager::get_language(unsigned int id) {
+
+    // Check if the language is loaded already and return it
+    if (this->languages_loaded[id])
+        return this->languages_loaded[id];
+
+    // Not loaded, unload all the loaded languages, if any
+    for (int i = 0; i < this->languages_loaded.length(); i++)
+        if (this->languages_loaded[i]) {
+            delete this->languages_loaded[i];
+            this->languages_loaded[i] = nullptr;
+        }
+
     auto langname = this->languages()[id];
     QFile ldef(this->languagefilenames.at(id));
     QFile wlist(this->languagefilenames.at(id) + ".wordlist");
-    Language* l = new Language(ldef, wlist, parent);
+    Language* l = new Language(ldef, wlist, this);
+
+    // Save the pointer to the language, for eventual reuse
+    this->languages_loaded[id] = l;
+
     return l;
 }
 
@@ -53,6 +80,7 @@ LanguageManager::LanguageManager(QObject *parent) : QObject(parent) {
         QFile ldef(fileinfo.absoluteFilePath());
         ldef.open(QIODevice::ReadOnly);
         this->languagenames.append(QString(ldef.readLine(120)).trimmed());
+        this->languages_loaded.append(nullptr);
         ldef.close();
     }
 

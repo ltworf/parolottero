@@ -1,6 +1,6 @@
 /*
 parolottero
-Copyright (C) 2021 Salvo "LtWorf" Tomaselli
+Copyright (C) 2021-2022 Salvo "LtWorf" Tomaselli
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as
@@ -23,6 +23,7 @@ author Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
 
 #include <QObject>
 #include <QStringList>
+#include <QList>
 #include "language.h"
 
 class LanguageManager : public QObject
@@ -35,10 +36,11 @@ signals:
 
 public slots:
     QStringList languages();
-    Language* get_language(unsigned int, QObject* parent);
+    Language* get_language(unsigned int);
 private:
     QStringList languagenames;
     QStringList languagefilenames;
+    QList<Language*> languages_loaded;
 };
 
 #endif // LANGUAGEMANAGER_H

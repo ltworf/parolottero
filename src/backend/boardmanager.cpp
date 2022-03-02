@@ -21,15 +21,12 @@ author Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
 #include <QRandomGenerator>
 
 #include "boardmanager.h"
-#include "languagemanager.h"
-
 
 BoardManager::BoardManager(QObject *parent) : QObject(parent)
 { }
 
 void BoardManager::init() {
     if (this->language != nullptr) {
-        delete this->language;
         this->language = nullptr;
     }
     this->scoreboard.clear();
@@ -46,8 +43,7 @@ void BoardManager::init() {
         emit playable_changed(false);
         return;
     }
-    LanguageManager lang_magr;
-    this->language = lang_magr.get_language(this->_language_index, this);
+    this->language = this->lang_magr.get_language(this->_language_index);
 
     //init board
 
