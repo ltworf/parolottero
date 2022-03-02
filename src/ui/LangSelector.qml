@@ -25,6 +25,7 @@ import QtQuick.Layouts 1.12
 ColumnLayout{
     property int language_index: -1
     property alias seed: spinseed.value
+    property alias use_seed: switchseed.checked
     property alias duration: durationspin.value
     spacing: 2
 
@@ -60,6 +61,14 @@ ColumnLayout{
         Layout.alignment: Qt.AlignBottom
         columns: 2
 
+        Switch {
+            Layout.columnSpan: 2
+            Layout.fillWidth: true
+            LayoutMirroring.enabled: true
+            text: qsTr("User defined seed")
+            id: switchseed
+        }
+
         Label {
             text: qsTr("Seed")
             Layout.fillWidth: true
@@ -70,6 +79,7 @@ ColumnLayout{
             from: 1
             to: 10000
             editable: true
+            enabled: switchseed.checked
         }
 
         Label {
