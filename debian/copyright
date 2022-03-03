@@ -7,13 +7,13 @@ Files: *
 Copyright: © 2021-2022 Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>,
 License: AGPL-3
 
-Files: /usr/share/games/parolottero/language_data/italian*
+Files: language_data/italian*
 Copyright: © 2016 Francesco Napoletano
 License: MIT
 Comment: Originally from https://github.com/napolux/paroleitaliane
  modified to fit the game.
 
-Files: /usr/share/games/parolottero/language_data/swedish*
+Files: language_data/swedish*
 Comment: Originally from the wswedish Debian package
  modified to fit the game.
 Copyright: © 1998 by Skåne/Sjælland Linux User Group <ispell@sslug.imm.dtu.dk>
@@ -31,7 +31,7 @@ License: GPL2+
  On Debian systems, the complete text of the GNU General
  Public License can be found in `/usr/share/common-licenses/GPL-2'.
 
-Files: /usr/share/games/parolottero/language_data/american*
+Files: language_data/american*
 Comment: Originally from the wamerican Debian package
  modified to fit the game.
 Copyright: © 2020 by Kevin Atkinson (kevina@gnu.org)
