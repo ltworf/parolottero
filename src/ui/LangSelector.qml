@@ -22,85 +22,102 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.12
 
-ColumnLayout{
+Item {
     property int language_index: -1
     property alias seed: spinseed.value
     property alias use_seed: switchseed.checked
     property alias duration: durationspin.value
-    spacing: 2
 
-    ListView {
-        Layout.alignment: Qt.AlignLeft
-        Layout.fillHeight: true
-        Layout.fillWidth: true
+    ColumnLayout{
+        anchors.fill: parent
+        spacing: 2
 
-        model: items
+        ListView {
+            Layout.alignment: Qt.AlignLeft
+            Layout.fillHeight: true
+            Layout.fillWidth: true
 
-        header: Label {
-            font.pointSize: 25
-            text: qsTr("Pick a language")
-            width: parent.width
-            horizontalAlignment: Text.AlignHCenter
+            model: items
+
+            header: Label {
+                font.pointSize: 25
+                text: qsTr("Pick a language")
+                width: parent.width
+                horizontalAlignment: Text.AlignHCenter
+            }
+
+            ListModel {
+                id: items
+            }
+
+            delegate: Button {
+                width: parent.width
+                text: name
+                onClicked: {
+                    language_index = index
+                }
+            }
         }
 
-        ListModel {
-            id: items
+        GridLayout {
+            Layout.fillWidth: true
+            Layout.alignment: Qt.AlignBottom
+            columns: 2
+
+            Switch {
+                Layout.columnSpan: 2
+                Layout.fillWidth: true
+                LayoutMirroring.enabled: true
+                text: qsTr("User defined seed")
+                id: switchseed
+            }
+
+            Label {
+                text: qsTr("Seed")
+                Layout.fillWidth: true
+            }
+
+            SpinBox {
+                id: spinseed
+                from: 1
+                to: 10000
+                editable: true
+                enabled: switchseed.checked
+            }
+
+            Label {
+                text: qsTr("Duration")
+                Layout.fillWidth: true
+            }
+
+            SpinBox {
+                id: durationspin
+                from: 1
+                to: 10
+                editable: true
+            }
+
+            Button {
+                Layout.columnSpan: 2
+                Layout.fillWidth: true
+                text: qsTr("About")
+                onClicked: aboutoverlay.visible = true
+            }
+
         }
 
-        delegate: Button {
-            width: parent.width
-            text: name
-            onClicked: {
-                language_index = index
+        Component.onCompleted: {
+            items.clear()
+            var languages = languageManager.languages();
+            for(var i = 0; i < languages.length; i++) {
+                items.append({name: languages[i], index: i})
             }
         }
     }
 
-    GridLayout {
-        Layout.fillWidth: true
-        Layout.alignment: Qt.AlignBottom
-        columns: 2
-
-        Switch {
-            Layout.columnSpan: 2
-            Layout.fillWidth: true
-            LayoutMirroring.enabled: true
-            text: qsTr("User defined seed")
-            id: switchseed
-        }
-
-        Label {
-            text: qsTr("Seed")
-            Layout.fillWidth: true
-        }
-
-        SpinBox {
-            id: spinseed
-            from: 1
-            to: 10000
-            editable: true
-            enabled: switchseed.checked
-        }
-
-        Label {
-            text: qsTr("Duration")
-            Layout.fillWidth: true
-        }
-
-        SpinBox {
-            id: durationspin
-            from: 1
-            to: 10
-            editable: true
-        }
-
-    }
-
-    Component.onCompleted: {
-        items.clear()
-        var languages = languageManager.languages();
-        for(var i = 0; i < languages.length; i++) {
-            items.append({name: languages[i], index: i})
-        }
+    About {
+        visible: false
+        id: aboutoverlay
+        anchors.fill: parent
     }
 }
