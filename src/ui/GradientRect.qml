@@ -28,8 +28,10 @@ import QtQuick.Controls 2.15
  */
 Rectangle {
     gradient: Gradient {
-        GradientStop { position: 0.0; color: "#994682B4" }
-        GradientStop { position: 1.0; color: "#AAAAAAAA" }
+        GradientStop { position: 0.0; color: "#FFFFFFFF" }
+        GradientStop { position: 0.2; color: "#994682B4" }
+        GradientStop { position: 0.8; color: "#AAAAAAAA" }
+        GradientStop { position: 1.0; color: "#FFFFFFFF" }
     }
     z: 1
 }
