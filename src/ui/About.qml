@@ -45,14 +45,14 @@ GradientRect {
 
         Label {
             font.pointSize: 10
-            text: '© 2021-2022 Salvo "LtWorf" Tomaselli &lt;<a href="mailto:tiposchi@tiscali.it">tiposchi@tiscali.it</a>&gt;'
+            text: '© 2021-2022 Salvo "LtWorf" Tomaselli <br>&lt;<a href="mailto:tiposchi@tiscali.it">tiposchi@tiscali.it</a>&gt;'
             Layout.margins: 5
             onLinkActivated:Qt.openUrlExternally(link);
         }
 
         Label {
             font.pointSize: 15
-            text: '<a href="https://github.com/ltworf/parolottero">https://github.com/ltworf/parolottero</a>'
+            text: qsTr('<a href="https://github.com/ltworf/parolottero">Website</a>')
             Layout.margins: 10
             onLinkActivated:Qt.openUrlExternally(link);
         }
