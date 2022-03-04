@@ -47,12 +47,14 @@ GradientRect {
             font.pointSize: 15
             text: 'Salvo "LtWorf" Tomaselli &lt;<a href="mailto:tiposchi@tiscali.it">tiposchi@tiscali.it</a>&gt;'
             Layout.margins: 10
+            onLinkActivated:Qt.openUrlExternally(link);
         }
 
         Label {
             font.pointSize: 15
             text: '<a href="https://github.com/ltworf/parolottero">https://github.com/ltworf/parolottero</a>'
             Layout.margins: 10
+            onLinkActivated:Qt.openUrlExternally(link);
         }
 
         Button {
