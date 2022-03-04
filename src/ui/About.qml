@@ -26,15 +26,42 @@ GradientRect {
 
     ColumnLayout {
         anchors.fill: parent
+        spacing: 20
+
+        Item {Layout.fillHeight: true}
 
         Label {
+            font.pointSize: 30
             text: qsTr("Parolottero")
+            Layout.fillWidth: true
+            horizontalAlignment: Text.AlignHCenter
+        }
+
+        Label {
+            font.pointSize: 15
+            text: qsTr("Released under AGPL-3")
+            Layout.margins: 10
+        }
+
+        Label {
+            font.pointSize: 15
+            text: 'Salvo "LtWorf" Tomaselli &lt;<a href="mailto:tiposchi@tiscali.it">tiposchi@tiscali.it</a>&gt;'
+            Layout.margins: 10
+        }
+
+        Label {
+            font.pointSize: 15
+            text: '<a href="https://github.com/ltworf/parolottero">https://github.com/ltworf/parolottero</a>'
+            Layout.margins: 10
         }
 
         Button {
             text: qsTr("Done")
             Layout.fillWidth: true
+            Layout.margins: 10
             onClicked: parent.parent.visible = false
         }
+
+        Item {Layout.fillHeight: true}
     }
 }
