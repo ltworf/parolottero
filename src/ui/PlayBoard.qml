@@ -164,15 +164,10 @@ Item {
             Layout.preferredWidth: parent.width
             Layout.fillHeight: true
 
-            Rectangle {
+            GradientRect {
                 // Visual feedback that the game is finished
                 visible: board.seconds_left == 0 && grid.visible
                 anchors.fill: parent
-                gradient: Gradient {
-                    GradientStop { position: 0.0; color: "#994682B4" }
-                    GradientStop { position: 1.0; color: "#AAAAAAAA" }
-                }
-                z: 1
             }
 
             GridView {

@@ -72,6 +72,7 @@ INSTALLS += manpage
 export(INSTALLS)
 
 DISTFILES += \
+    ui/GradientRect.qml \
     ui/LangSelector.qml \
     ui/LetterCell.qml \
     ui/PlayBoard.qml \
