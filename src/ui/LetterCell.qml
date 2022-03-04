@@ -26,7 +26,7 @@ Rectangle {
     property string text: ""
     border.width: 3
 
-    border.color: (multiplier == 1) ? "light steel blue" : ((multiplier == 2) ? "yellow": "pink")
+    border.color: (multiplier == 1) ? "light steel blue" : ((multiplier == 2) ? "gold": "pink")
 
     gradient: Gradient {
         GradientStop { position: 0.0; color: used ? "steel blue": border.color }
