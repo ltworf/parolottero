@@ -138,6 +138,8 @@ Item {
             Layout.fillWidth: true
             Layout.margins: 5
 
+            ScrollBar.vertical: ScrollBar { }
+
             model: scores
 
             ListModel {

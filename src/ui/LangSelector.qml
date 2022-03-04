@@ -41,6 +41,8 @@ Item {
 
             model: items
 
+            ScrollBar.vertical: ScrollBar { }
+
             header: Label {
                 font.pointSize: 25
                 text: qsTr("Pick a language")
