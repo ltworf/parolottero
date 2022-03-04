@@ -36,6 +36,8 @@ Item {
             Layout.alignment: Qt.AlignLeft
             Layout.fillHeight: true
             Layout.fillWidth: true
+            Layout.leftMargin: 10
+            Layout.rightMargin: 10
 
             model: items
 
@@ -102,6 +104,9 @@ Item {
                 Layout.fillWidth: true
                 text: qsTr("About")
                 onClicked: aboutoverlay.visible = true
+                Layout.leftMargin: 10
+                Layout.rightMargin: 10
+                Layout.bottomMargin: 5
             }
 
         }
