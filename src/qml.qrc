@@ -2,6 +2,7 @@
     <qresource prefix="/">
         <file>ui/main.qml</file>
         <file>ui/GradientRect.qml</file>
+        <file>ui/About.qml</file>
         <file>ui/LangSelector.qml</file>
         <file>ui/PlayBoard.qml</file>
         <file>ui/LetterCell.qml</file>

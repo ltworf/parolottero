@@ -73,6 +73,7 @@ export(INSTALLS)
 
 DISTFILES += \
     ui/GradientRect.qml \
+    ui/About.qml \
     ui/LangSelector.qml \
     ui/LetterCell.qml \
     ui/PlayBoard.qml \
