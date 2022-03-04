@@ -44,9 +44,9 @@ GradientRect {
         }
 
         Label {
-            font.pointSize: 15
-            text: 'Salvo "LtWorf" Tomaselli &lt;<a href="mailto:tiposchi@tiscali.it">tiposchi@tiscali.it</a>&gt;'
-            Layout.margins: 10
+            font.pointSize: 10
+            text: '© 2021-2022 Salvo "LtWorf" Tomaselli &lt;<a href="mailto:tiposchi@tiscali.it">tiposchi@tiscali.it</a>&gt;'
+            Layout.margins: 5
             onLinkActivated:Qt.openUrlExternally(link);
         }
 
