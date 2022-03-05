@@ -67,3 +67,6 @@ deb-pkg: dist
 	mkdir -p deb-pkg
 	mv /tmp/parolottero*.* deb-pkg
 	lintian --pedantic -E --color auto -i -I deb-pkg/*changes deb-pkg/*deb
+
+src/parolottero_it_IT.ts:
+	cd src; lupdate -verbose parolottero.pro
