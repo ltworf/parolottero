@@ -71,6 +71,7 @@ Item {
             Switch {
                 Layout.columnSpan: 2
                 Layout.fillWidth: true
+                Layout.rightMargin: 5
                 LayoutMirroring.enabled: true
                 text: qsTr("User defined seed")
                 id: switchseed
@@ -79,6 +80,7 @@ Item {
             Label {
                 text: qsTr("Seed")
                 Layout.fillWidth: true
+                Layout.leftMargin: 5
             }
 
             SpinBox {
@@ -87,11 +89,13 @@ Item {
                 to: 10000
                 editable: true
                 enabled: switchseed.checked
+                Layout.rightMargin: 5
             }
 
             Label {
                 text: qsTr("Duration")
                 Layout.fillWidth: true
+                Layout.leftMargin: 5
             }
 
             SpinBox {
@@ -99,6 +103,7 @@ Item {
                 from: 1
                 to: 10
                 editable: true
+                Layout.rightMargin: 5
             }
 
             Button {
