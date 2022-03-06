@@ -175,14 +175,11 @@ Item {
             GridView {
                 id: grid
 
-                width: parent.width > parent.height ? parent.height : parent.width
+                width: cellWidth * 4
                 height: width
-                anchors.leftMargin: 20
-                anchors.topMargin: 20
-                anchors.top: parent.top
-                anchors.left: parent.left
+                anchors.centerIn: parent
 
-                cellWidth: Math.floor(width / 4)
+                cellWidth: (parent.width > parent.height ? parent.height : parent.width) / 4
                 cellHeight: cellWidth
 
                 model: items
