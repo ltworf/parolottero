@@ -1,6 +1,6 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Contact: Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
-Source: https://ltworf.github.io/parolottero/
+Source: https://github.com/ltworf/parolottero
 Upstream-Name: parolottero
 
 Files: *
