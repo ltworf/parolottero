@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 # parolottero
-# Copyright (C) 2021 Salvo "LtWorf" Tomaselli
+# Copyright (C) 2021-2022 Salvo "LtWorf" Tomaselli
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -144,6 +144,19 @@ def gen_language(language: Language, dest: Path, wordlist: Path) -> None:
 
 
 languages = {
+     'sicilian': Language(
+        name='Sicilianu',
+        letters=set('abcdefghilmnopqrstuvzj'),
+        vowels=set('aeiou'),
+        substitutions={
+            ('à', 'a'),
+            ('è', 'e'),
+            ('ì', 'i'),
+            ('ò', 'o'),
+            ('ù', 'u'),
+        },
+        wordlist=Path('sicilian'),
+    ),
     'italian': Language(
         name='Italiano',
         letters=set('abcdefghilmnopqrstuvz'),
