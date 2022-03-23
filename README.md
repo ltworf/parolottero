@@ -3,6 +3,9 @@ Parolottero
 
 Interactive game inspired by Passaparola (which I later learnt was inspired by Boggle).
 
+
+[Gameplay video](https://www.youtube.com/watch?v=NEwD4Rn_nPQ)
+
 Game modes
 ----------
 
