@@ -89,6 +89,7 @@ Item {
             Button {
                 text: qsTr("Scores")
                 visible: board.seconds_left == 0
+                highlighted: scoreboard.visible
                 onClicked: {
                     // Update the scoreboard just if we are about to show it
                     if (!scoreboard.visible) {
