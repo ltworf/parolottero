@@ -4,8 +4,6 @@ Parolottero
 Interactive game inspired by Passaparola (which I later learnt was inspired by Boggle).
 
 
-[Gameplay video](https://www.youtube.com/watch?v=NEwD4Rn_nPQ)
-
 Game modes
 ----------
 
@@ -17,7 +15,7 @@ To play against other people you will all need a device and will need to set the
 Playing
 -------
 
-I think it's quite obvious :)
+[Gameplay video](https://www.youtube.com/watch?v=NEwD4Rn_nPQ)
 
 
 Installing
