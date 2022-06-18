@@ -18,6 +18,7 @@
 
 .PHONY: clean
 clean:
+	$(RM) deb-pkg
 
 .PHONY: dist
 dist:
