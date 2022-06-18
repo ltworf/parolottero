@@ -43,12 +43,10 @@ make -j
 Game files
 ----------
 
-The game files are contained in the dist .tar.gz file. But there is a Makefile with targets to regenerate them.
+See here: https://github.com/ltworf/parolottero-languages
 
 
 Contributing
 ------------
-
-If you are contributing a new language, make sure the license of the word list allows it.
 
 Contributions are welcome both via git send mail to tiposchi@tiscali.it or github pull requests.
