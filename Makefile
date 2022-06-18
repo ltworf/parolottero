@@ -16,35 +16,11 @@
 #
 # author Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
 
-.PHONY: wordlists
-wordlists: language_data/italian language_data/swedish language_data/american language_data/sicilian
-
-dict:
-	mkdir -p dict
-
-dict/italian: dict
-	wget https://github.com/napolux/paroleitaliane/raw/master/paroleitaliane/280000_parole_italiane.txt -O $@
-
-dict/sicilian: dict
-	wget https://github.com/ltworf/sicilianu/releases/download/2022-03-18/wsicilian-2022-03-18.tar.gz -O $@.tar.gz
-	cd dict; tar -xf `basename $@.tar.gz`
-	rm $@.tar.gz
-	touch $@
-	mv dict/wsicilian $@
-
-language_data:
-	mkdir language_data
-
-language_data/%: language_data dict/italian dict/sicilian
-	utils/lang_init.py `basename $@` $@ $@.wordlist
-
 .PHONY: clean
 clean:
-	$(RM) -r language_data
-	$(RM) -r dict
 
 .PHONY: dist
-dist: wordlists
+dist:
 	rm -rf /tmp/parolottero/
 	rm -rf /tmp/parolottero-*
 	mkdir /tmp/parolottero/
@@ -52,8 +28,6 @@ dist: wordlists
 	( \
 		cd /tmp; \
 		tar --exclude '*.user' -zcf parolottero.tar.gz \
-			parolottero/language_data \
-			parolottero/utils \
 			parolottero/src \
 			parolottero/Makefile \
 			parolottero/LICENSE \
