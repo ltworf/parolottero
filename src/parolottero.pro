@@ -61,10 +61,6 @@ icon.files = extras/parolottero.svg
 icon.path = $${DESTDIR}/usr/share/icons/hicolor/48x48/apps/
 INSTALLS += icon
 
-data.files = ../language_data/*
-data.path = $${DESTDIR}/usr/share/games/parolottero/language_data/
-INSTALLS += data
-
 manpage.files = extras/parolottero.6
 manpage.path = $${DESTDIR}/usr/share/man/man6/
 INSTALLS += manpage
