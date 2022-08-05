@@ -79,22 +79,25 @@ void LanguageManager::rescan() {
     this->unload_languages();
     this->languages_loaded.clear();
 
-    //FIXME find also in the user home
-    auto dir = QDir("/usr/share/games/parolottero/language_data/");
+    // Paths where languages can be
+    QList<QDir> dirs;
+    dirs << QDir("/usr/share/games/parolottero/language_data/");
 
-    dir.setFilter(QDir::Files);
-    dir.setSorting(QDir::Name | QDir::IgnoreCase);
-    QFileInfoList list = dir.entryInfoList();
-    for (int i = 0 ; i < list.size(); i++) {
-        QFileInfo fileinfo = list.at(i);
-        if (fileinfo.fileName().endsWith(".wordlist"))
-            continue;
-        this->languagefilenames.append(fileinfo.absoluteFilePath());
+    foreach (QDir dir, dirs) {
+        dir.setFilter(QDir::Files);
+        dir.setSorting(QDir::Name | QDir::IgnoreCase);
+        QFileInfoList list = dir.entryInfoList();
+        for (int i = 0 ; i < list.size(); i++) {
+            QFileInfo fileinfo = list.at(i);
+            if (fileinfo.fileName().endsWith(".wordlist"))
+                continue;
+            this->languagefilenames.append(fileinfo.absoluteFilePath());
 
-        QFile ldef(fileinfo.absoluteFilePath());
-        ldef.open(QIODevice::ReadOnly);
-        this->languagenames.append(QString(ldef.readLine(120)).trimmed());
-        this->languages_loaded.append(nullptr);
-        ldef.close();
+            QFile ldef(fileinfo.absoluteFilePath());
+            ldef.open(QIODevice::ReadOnly);
+            this->languagenames.append(QString(ldef.readLine(120)).trimmed());
+            this->languages_loaded.append(nullptr);
+            ldef.close();
+        }
     }
 }
