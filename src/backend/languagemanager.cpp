@@ -69,6 +69,8 @@ void LanguageManager::unload_languages() {
 }
 
 LanguageManager::LanguageManager(QObject *parent) : QObject(parent) {
+    QDir languages(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation));
+    languages.mkpath("language_data");
     this->rescan();
 }
 
