@@ -101,8 +101,8 @@ Item {
                     if (local)
                         language_index = index
                     else {
-                        console.log(name, local, url)
-                        // languageManager.download(url)
+                        console.debug(url)
+                        languageManager.download(url)
                     }
                 }
             }
