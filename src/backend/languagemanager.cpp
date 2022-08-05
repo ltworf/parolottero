@@ -83,9 +83,12 @@ void LanguageManager::rescan() {
 
     // Paths where languages can be
     QList<QDir> dirs;
+    dirs << QDir(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + "/language_data");
     dirs << QDir("/usr/share/games/parolottero/language_data/");
 
     foreach (QDir dir, dirs) {
+        if (!dir.exists())
+            continue;
         dir.setFilter(QDir::Files);
         dir.setSorting(QDir::Name | QDir::IgnoreCase);
         QFileInfoList list = dir.entryInfoList();
