@@ -46,12 +46,7 @@ Language* LanguageManager::get_language(unsigned int id) {
     if (this->languages_loaded[id])
         return this->languages_loaded[id];
 
-    // Not loaded, unload all the loaded languages, if any
-    for (int i = 0; i < this->languages_loaded.length(); i++)
-        if (this->languages_loaded[i]) {
-            delete this->languages_loaded[i];
-            this->languages_loaded[i] = nullptr;
-        }
+    this->unload_languages();
 
     auto langname = this->languages()[id];
     QFile ldef(this->languagefilenames.at(id));
@@ -64,7 +59,26 @@ Language* LanguageManager::get_language(unsigned int id) {
     return l;
 }
 
+void LanguageManager::unload_languages() {
+    // Not loaded, unload all the loaded languages, if any
+    for (int i = 0; i < this->languages_loaded.length(); i++)
+        if (this->languages_loaded[i]) {
+            delete this->languages_loaded[i];
+            this->languages_loaded[i] = nullptr;
+        }
+}
+
 LanguageManager::LanguageManager(QObject *parent) : QObject(parent) {
+    this->rescan();
+}
+
+void LanguageManager::rescan() {
+    // Clear all the lists
+    this->languagefilenames.clear();
+    this->languagenames.clear();
+    this->unload_languages();
+    this->languages_loaded.clear();
+
     //FIXME find also in the user home
     auto dir = QDir("/usr/share/games/parolottero/language_data/");
 
@@ -83,5 +97,4 @@ LanguageManager::LanguageManager(QObject *parent) : QObject(parent) {
         this->languages_loaded.append(nullptr);
         ldef.close();
     }
-
 }
