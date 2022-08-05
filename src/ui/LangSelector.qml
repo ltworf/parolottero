@@ -80,7 +80,7 @@ Item {
                             if (name.includes("wordlist"))
                                 continue;
                             var download_url = assets[i]["browser_download_url"]
-                            var item = {name: name, url: url, local: false, index: -1}
+                            var item = {name: name, url: download_url, local: false, index: -1}
                             items.append(item)
                         }
 
