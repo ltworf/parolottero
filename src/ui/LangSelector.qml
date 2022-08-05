@@ -50,15 +50,60 @@ Item {
                 horizontalAlignment: Text.AlignHCenter
             }
 
+            footer: Button {
+                width: parent.width / 2
+                text: qsTr("Download more languages")
+                id: downloadlanguagelist
+                onClicked: {
+                    downloadlanguagelist.enabled = false
+                    downloadlanguagelist.text = qsTr("Downloading…")
+                    var http = new XMLHttpRequest()
+                    http.responseType = "json"
+                    var url = "https://api.github.com/repos/ltworf/parolottero-languages/releases/latest"
+
+                    http.open("GET", url);
+                    http.onreadystatechange = function() {
+                        if (http.readyState !== XMLHttpRequest.DONE) return;
+                        // Error
+                        if (http.status !== 200) {
+                            downloadlanguagelist.text = qsTr("Download error")
+                            return;
+                        }
+
+                        downloadlanguagelist.enabled = true
+                        downloadlanguagelist.text = qsTr("Download more languages")
+
+                        var assets = http.response['assets']
+
+                        for (var i = 0; i < assets.length; i++) {
+                            var name = assets[i]["name"]
+                            if (name.includes("wordlist"))
+                                continue;
+                            var download_url = assets[i]["browser_download_url"]
+                            var item = {name: name, url: url, local: false, index: -1}
+                            items.append(item)
+                        }
+
+                    }
+                    http.send()
+                }
+
+            }
+
             ListModel {
                 id: items
             }
 
             delegate: Button {
                 width: parent.width
-                text: name
+                text: local ? name : qsTr("Download: ") + name
                 onClicked: {
-                    language_index = index
+                    if (local)
+                        language_index = index
+                    else {
+                        console.log(name, local, url)
+                        // languageManager.download(url)
+                    }
                 }
             }
         }
@@ -122,7 +167,7 @@ Item {
             items.clear()
             var languages = languageManager.languages();
             for(var i = 0; i < languages.length; i++) {
-                items.append({name: languages[i], index: i})
+                items.append({name: languages[i], index: i, local: true, url: ""})
             }
         }
     }
