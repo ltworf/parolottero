@@ -38,6 +38,7 @@ public slots:
     QStringList languages();
     Language* get_language(unsigned int);
     void rescan();
+    void download(QString);
 private:
     QStringList languagenames;
     QStringList languagefilenames;

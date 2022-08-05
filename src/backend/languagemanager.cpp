@@ -103,3 +103,12 @@ void LanguageManager::rescan() {
         }
     }
 }
+
+#include <QDebug>
+
+void LanguageManager::download(QString url) {
+    QString wordlist = url.left(url.length() - 2) + "wordlist.gz";
+    qDebug() << url ; qDebug() << wordlist;
+    qDebug() << QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
+
+}
