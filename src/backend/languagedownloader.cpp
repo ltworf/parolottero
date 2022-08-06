@@ -26,8 +26,8 @@ author Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
 
 void LanguageDownloader::download(QString urlstring) {
     this->language = QUrl(urlstring);
-    QString wordlist = urlstring.left(urlstring.length() - 2) + "wordlist.gz";
-    QNetworkRequest request((QUrl(wordlist)));
+    QUrl wordlist = QUrl(urlstring + ".wordlist");
+    QNetworkRequest request(wordlist);
     request.setMaximumRedirectsAllowed(5);
     this->nam.get(request);
     this->change_state(LanguageDownloader::DownloadState::DownloadingWordlist);
