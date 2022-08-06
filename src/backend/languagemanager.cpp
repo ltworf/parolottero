@@ -74,6 +74,11 @@ LanguageManager::LanguageManager(QObject *parent) : QObject(parent) {
     this->rescan();
 }
 
+/**
+ * @brief LanguageManager::rescan
+ *
+ * Deletes all the internal structures and rescans the language files.
+ */
 void LanguageManager::rescan() {
     // Clear all the lists
     this->languagefilenames.clear();
@@ -105,13 +110,4 @@ void LanguageManager::rescan() {
             ldef.close();
         }
     }
-}
-
-#include <QDebug>
-
-void LanguageManager::download(QString url) {
-    QString wordlist = url.left(url.length() - 2) + "wordlist.gz";
-    qDebug() << url ; qDebug() << wordlist;
-    qDebug() << QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
-
 }
