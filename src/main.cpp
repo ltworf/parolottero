@@ -27,6 +27,7 @@ author Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
 
 #include "backend/languagemanager.h"
 #include "backend/boardmanager.h"
+#include "backend/languagedownloader.h"
 
 int main(int argc, char *argv[])
 {
@@ -60,6 +61,7 @@ int main(int argc, char *argv[])
     LanguageManager language_manager(&engine);
     engine.rootContext()->setContextProperty("languageManager", &language_manager);
     qmlRegisterType<BoardManager>("ltworf.parolottero", 1, 0, "BoardManager");
+    qmlRegisterType<LanguageDownloader>("ltworf.parolottero", 1, 0, "LanguageDownloader");
 
     engine.load(url);
 

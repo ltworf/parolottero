@@ -22,6 +22,8 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.12
 
+import ltworf.parolottero 1.0
+
 Item {
     property int language_index: -1
     property alias seed: spinseed.value
@@ -97,11 +99,14 @@ Item {
             delegate: Button {
                 width: parent.width
                 text: local ? name : qsTr("Download: ") + name
+                enabled: downloader.state === LanguageDownloader.Idle
+
+                LanguageDownloader {id: downloader}
                 onClicked: {
                     if (local)
                         language_index = index
                     else {
-                        languageManager.download(url)
+                        downloader.download(url)
                     }
                 }
             }
