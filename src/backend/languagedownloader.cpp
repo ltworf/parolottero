@@ -79,7 +79,13 @@ void LanguageDownloader::finished(QNetworkReply* reply) {
     QFile dest(destdir + filename);
     dest.open(QIODevice::WriteOnly);
     auto data = reply->readAll();
-    qDebug() << data;
+
+    if (data.length() == 0) {
+        qDebug() << "File is empty";
+        this->change_state(LanguageDownloader::DownloadState::Error);
+        return;
+    }
+
     dest.write(data);
     dest.close();
 
