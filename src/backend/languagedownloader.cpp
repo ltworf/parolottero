@@ -46,13 +46,12 @@ LanguageDownloader::LanguageDownloader(QObject *parent) : QObject(parent) {
     this->hops = 10;
 }
 
+
 void LanguageDownloader::finished(QNetworkReply* reply) {
     if (reply->error() != QNetworkReply::NoError) {
         this->change_state(LanguageDownloader::DownloadState::Error);
         return;
     }
-
-    qDebug() << reply->rawHeaderPairs();
 
     if (reply->hasRawHeader("Location") && this->hops > 0) {
         this->hops--;
@@ -68,9 +67,14 @@ void LanguageDownloader::finished(QNetworkReply* reply) {
     }
 
     QString destdir = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + "/language_data/";
-    QString filename = reply->url().fileName();
 
-    qDebug() << "finished, saving into" << destdir + filename;
+    QString filename = this->language.fileName();
+
+    if (this->state == LanguageDownloader::DownloadState::DownloadingWordlist) {
+        filename += ".wordlist";
+    }
+
+    qDebug() << "finished, saving into" << filename;
 
     QFile dest(destdir + filename);
     dest.open(QIODevice::WriteOnly);
