@@ -140,16 +140,35 @@ Item {
                 width: parent.width
                 text: local ? name : qsTr("Download: ") + name
                 enabled: downloader.state === LanguageDownloader.Idle
-
+                Rectangle {
+                    visible: downloader.state === LanguageDownloader.Error || downloader.state === LanguageDownloader.Done
+                    anchors.fill: parent
+                    gradient: Gradient {
+                        GradientStop { position: 0.0; color: "#000000FF" }
+                        GradientStop { position: 0.1; color: downloader.state === LanguageDownloader.Done ? "green": "red" }
+                        GradientStop { position: 1.0; color: "#000000FF" }
+                    }
+                }
+                BusyIndicator {
+                    id: downloadspinner
+                    running: visible
+                    visible: false
+                    anchors.fill: parent
+                }
                 LanguageDownloader {
                     id: downloader
+
                     onStateChanged: {
-                        if (downloader.getState() === LanguageDownloader.Error)
+                        if (downloader.getState() === LanguageDownloader.Error) {
+                            downloadspinner.visible = false
                             text = qsTr("Error downloading: ") + name
-                        else if (downloader.getState() === LanguageDownloader.Done)
+                        } else if (downloader.getState() === LanguageDownloader.Done) {
                             text = qsTr("Downloaded: ") + name
-                        else
+                            downloadspinner.visible = false
+                        } else {
                             text = qsTr("Downloading: ") + name
+                            downloadspinner.visible = true
+                        }
                     }
                 }
                 onClicked: {
