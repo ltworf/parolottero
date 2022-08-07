@@ -80,7 +80,7 @@ Item {
 
             // Button to download language list
             footer: Button {
-                width: parent.width / 2
+                width: parent.width
                 text: qsTr("Download more languages")
                 id: downloadlanguagelist
                 onClicked: {
