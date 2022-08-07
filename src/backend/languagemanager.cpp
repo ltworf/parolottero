@@ -99,13 +99,21 @@ void LanguageManager::rescan() {
         QFileInfoList list = dir.entryInfoList();
         for (int i = 0 ; i < list.size(); i++) {
             QFileInfo fileinfo = list.at(i);
+            // Skip wordlist files
             if (fileinfo.fileName().endsWith(".wordlist"))
                 continue;
-            this->languagefilenames.append(fileinfo.absoluteFilePath());
 
+            // Read the name of the language
             QFile ldef(fileinfo.absoluteFilePath());
             ldef.open(QIODevice::ReadOnly);
-            this->languagenames.append(QString(ldef.readLine(120)).trimmed());
+            QString language_name = ldef.readLine(120).trimmed();
+
+            // Skip already existing language
+            if (this->languagenames.contains(language_name))
+                continue;
+
+            this->languagenames.append(language_name);
+            this->languagefilenames.append(fileinfo.absoluteFilePath());
             this->languages_loaded.append(nullptr);
             ldef.close();
         }

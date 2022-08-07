@@ -138,18 +138,37 @@ Item {
             // Start a match or download a language
             delegate: Button {
                 width: parent.width
-                text: local ? name : qsTr("Download: ") + name
+                text: local ? name : qsTr("Download: %1").arg(name)
                 enabled: downloader.state === LanguageDownloader.Idle
-
+                Rectangle {
+                    visible: downloader.state === LanguageDownloader.Error || downloader.state === LanguageDownloader.Done
+                    anchors.fill: parent
+                    gradient: Gradient {
+                        GradientStop { position: 0.0; color: "#000000FF" }
+                        GradientStop { position: 0.1; color: downloader.state === LanguageDownloader.Done ? "green": "red" }
+                        GradientStop { position: 1.0; color: "#000000FF" }
+                    }
+                }
+                BusyIndicator {
+                    id: downloadspinner
+                    running: visible
+                    visible: false
+                    anchors.fill: parent
+                }
                 LanguageDownloader {
                     id: downloader
+
                     onStateChanged: {
-                        if (downloader.getState() === LanguageDownloader.Error)
-                            text = qsTr("Error downloading: ") + name
-                        else if (downloader.getState() === LanguageDownloader.Done)
-                            text = qsTr("Downloaded: ") + name
-                        else
-                            text = qsTr("Downloading: ") + name
+                        if (downloader.getState() === LanguageDownloader.Error) {
+                            downloadspinner.visible = false
+                            text = qsTr("Error downloading: %1").arg(name)
+                        } else if (downloader.getState() === LanguageDownloader.Done) {
+                            text = qsTr("Downloaded: %1").arg(name)
+                            downloadspinner.visible = false
+                        } else {
+                            text = qsTr("Downloading: %1").arg(name)
+                            downloadspinner.visible = true
+                        }
                     }
                 }
                 onClicked: {
