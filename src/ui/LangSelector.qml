@@ -133,7 +133,7 @@ Item {
                         if (downloader.getState() === LanguageDownloader.Error)
                             text = qsTr("Error downloading: ") + name
                         else if (downloader.getState() === LanguageDownloader.Done)
-                            text = qsTr("Completed: ") + name
+                            text = qsTr("Downloaded: ") + name
                         else
                             text = qsTr("Downloading: ") + name
                     }
