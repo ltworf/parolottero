@@ -46,12 +46,7 @@ Language* LanguageManager::get_language(unsigned int id) {
     if (this->languages_loaded[id])
         return this->languages_loaded[id];
 
-    // Not loaded, unload all the loaded languages, if any
-    for (int i = 0; i < this->languages_loaded.length(); i++)
-        if (this->languages_loaded[i]) {
-            delete this->languages_loaded[i];
-            this->languages_loaded[i] = nullptr;
-        }
+    this->unload_languages();
 
     auto langname = this->languages()[id];
     QFile ldef(this->languagefilenames.at(id));
@@ -64,24 +59,55 @@ Language* LanguageManager::get_language(unsigned int id) {
     return l;
 }
 
+void LanguageManager::unload_languages() {
+    // Not loaded, unload all the loaded languages, if any
+    for (int i = 0; i < this->languages_loaded.length(); i++)
+        if (this->languages_loaded[i]) {
+            delete this->languages_loaded[i];
+            this->languages_loaded[i] = nullptr;
+        }
+}
+
 LanguageManager::LanguageManager(QObject *parent) : QObject(parent) {
-    //FIXME find also in the user home
-    auto dir = QDir("/usr/share/games/parolottero/language_data/");
+    QDir languages(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation));
+    languages.mkpath("language_data");
+    this->rescan();
+}
 
-    dir.setFilter(QDir::Files);
-    dir.setSorting(QDir::Name | QDir::IgnoreCase);
-    QFileInfoList list = dir.entryInfoList();
-    for (int i = 0 ; i < list.size(); i++) {
-        QFileInfo fileinfo = list.at(i);
-        if (fileinfo.fileName().endsWith(".wordlist"))
+/**
+ * @brief LanguageManager::rescan
+ *
+ * Deletes all the internal structures and rescans the language files.
+ */
+void LanguageManager::rescan() {
+    // Clear all the lists
+    this->languagefilenames.clear();
+    this->languagenames.clear();
+    this->unload_languages();
+    this->languages_loaded.clear();
+
+    // Paths where languages can be
+    QList<QDir> dirs;
+    dirs << QDir(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + "/language_data");
+    dirs << QDir("/usr/share/games/parolottero/language_data/");
+
+    foreach (QDir dir, dirs) {
+        if (!dir.exists())
             continue;
-        this->languagefilenames.append(fileinfo.absoluteFilePath());
+        dir.setFilter(QDir::Files);
+        dir.setSorting(QDir::Name | QDir::IgnoreCase);
+        QFileInfoList list = dir.entryInfoList();
+        for (int i = 0 ; i < list.size(); i++) {
+            QFileInfo fileinfo = list.at(i);
+            if (fileinfo.fileName().endsWith(".wordlist"))
+                continue;
+            this->languagefilenames.append(fileinfo.absoluteFilePath());
 
-        QFile ldef(fileinfo.absoluteFilePath());
-        ldef.open(QIODevice::ReadOnly);
-        this->languagenames.append(QString(ldef.readLine(120)).trimmed());
-        this->languages_loaded.append(nullptr);
-        ldef.close();
+            QFile ldef(fileinfo.absoluteFilePath());
+            ldef.open(QIODevice::ReadOnly);
+            this->languagenames.append(QString(ldef.readLine(120)).trimmed());
+            this->languages_loaded.append(nullptr);
+            ldef.close();
+        }
     }
-
 }

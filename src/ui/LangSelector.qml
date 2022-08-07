@@ -22,6 +22,8 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.12
 
+import ltworf.parolottero 1.0
+
 Item {
     property int language_index: -1
     property alias seed: spinseed.value
@@ -50,15 +52,72 @@ Item {
                 horizontalAlignment: Text.AlignHCenter
             }
 
+            footer: Button {
+                width: parent.width / 2
+                text: qsTr("Download more languages")
+                id: downloadlanguagelist
+                onClicked: {
+                    downloadlanguagelist.enabled = false
+                    downloadlanguagelist.text = qsTr("Downloading…")
+                    var http = new XMLHttpRequest()
+                    http.responseType = "json"
+                    var url = "https://api.github.com/repos/ltworf/parolottero-languages/releases/latest"
+
+                    http.open("GET", url);
+                    http.onreadystatechange = function() {
+                        if (http.readyState !== XMLHttpRequest.DONE) return;
+                        // Error
+                        if (http.status !== 200) {
+                            downloadlanguagelist.text = qsTr("Download error")
+                            return;
+                        }
+
+                        downloadlanguagelist.enabled = true
+                        downloadlanguagelist.text = qsTr("Download more languages")
+
+                        var assets = http.response['assets']
+
+                        for (var i = 0; i < assets.length; i++) {
+                            var name = assets[i]["name"]
+                            if (name.includes("wordlist"))
+                                continue;
+                            var download_url = assets[i]["browser_download_url"]
+                            var item = {name: name, url: download_url, local: false, index: -1}
+                            items.append(item)
+                        }
+
+                    }
+                    http.send()
+                }
+
+            }
+
             ListModel {
                 id: items
             }
 
             delegate: Button {
                 width: parent.width
-                text: name
+                text: local ? name : qsTr("Download: ") + name
+                enabled: downloader.state === LanguageDownloader.Idle
+
+                LanguageDownloader {
+                    id: downloader
+                    onStateChanged: {
+                        if (downloader.getState() === LanguageDownloader.Error)
+                            text = qsTr("Error downloading: ") + name
+                        else if (downloader.getState() === LanguageDownloader.Done)
+                            text = qsTr("Completed: ") + name
+                        else
+                            text = qsTr("Downloading: ") + name
+                    }
+                }
                 onClicked: {
-                    language_index = index
+                    if (local)
+                        language_index = index
+                    else {
+                        downloader.download(url)
+                    }
                 }
             }
         }
@@ -122,7 +181,7 @@ Item {
             items.clear()
             var languages = languageManager.languages();
             for(var i = 0; i < languages.length; i++) {
-                items.append({name: languages[i], index: i})
+                items.append({name: languages[i], index: i, local: true, url: ""})
             }
         }
     }

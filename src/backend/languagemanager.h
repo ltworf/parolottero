@@ -37,10 +37,12 @@ signals:
 public slots:
     QStringList languages();
     Language* get_language(unsigned int);
+    void rescan();
 private:
     QStringList languagenames;
     QStringList languagefilenames;
     QList<Language*> languages_loaded;
+    void unload_languages();
 };
 
 #endif // LANGUAGEMANAGER_H

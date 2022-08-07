@@ -29,6 +29,7 @@ DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs depr
 SOURCES += \
     backend/boardmanager.cpp \
     backend/language.cpp \
+    backend/languagedownloader.cpp \
     backend/languagemanager.cpp \
     backend/scoreboard.cpp \
     backend/scoreboarditem.cpp \
@@ -37,6 +38,7 @@ SOURCES += \
 HEADERS += \
     backend/boardmanager.h \
     backend/language.h \
+    backend/languagedownloader.h \
     backend/languagemanager.h \
     backend/scoreboard.h \
     backend/scoreboarditem.h
