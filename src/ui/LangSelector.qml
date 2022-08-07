@@ -40,10 +40,9 @@ Item {
             Layout.fillWidth: true
             Layout.leftMargin: 10
             Layout.rightMargin: 10
+            clip: true
 
             model: items
-
-            ScrollBar.vertical: ScrollBar { }
 
             header: Label {
                 font.pointSize: 25
@@ -52,13 +51,55 @@ Item {
                 horizontalAlignment: Text.AlignHCenter
             }
 
+            // Load list of languages
+            function refreshList() {
+                items.clear()
+                var languages = languageManager.languages();
+                for(var i = 0; i < languages.length; i++) {
+                    items.append({name: languages[i], index: i, local: true, url: ""})
+                }
+            }
+
+            Component.onCompleted: refreshList()
+
+            // Implement refresh when scrolling down
+            property bool negativescroll: scrollbar.position < 0
+            onNegativescrollChanged: {
+                if (spinner.visible) {
+                    languageManager.rescan()
+                    refreshList()
+                }
+                spinner.visible = !spinner.visible
+            }
+
+            ScrollBar.vertical: ScrollBar {
+                id: scrollbar
+            }
+
+            BusyIndicator {
+                anchors.top: parent.top
+                anchors.horizontalCenter: parent.horizontalCenter
+                visible: false
+                running: visible
+                id: spinner
+            }
+
+            // Button to download language list
             footer: Button {
-                width: parent.width / 2
+                width: parent.width
                 text: qsTr("Download more languages")
                 id: downloadlanguagelist
                 onClicked: {
                     downloadlanguagelist.enabled = false
                     downloadlanguagelist.text = qsTr("Downloading…")
+
+                    // Remove previous download buttons
+                    for (var i = items.count - 1; i >= 0; i--) {
+                        if (!items.get(i).local)
+                            items.remove(i, 1)
+                    }
+
+                    // Prepare http request
                     var http = new XMLHttpRequest()
                     http.responseType = "json"
                     var url = "https://api.github.com/repos/ltworf/parolottero-languages/releases/latest"
@@ -73,7 +114,7 @@ Item {
                         }
 
                         downloadlanguagelist.enabled = true
-                        downloadlanguagelist.text = qsTr("Download more languages")
+                        text = qsTr("Download more languages")
 
                         var assets = http.response['assets']
 
@@ -85,17 +126,16 @@ Item {
                             var item = {name: name, url: download_url, local: false, index: -1}
                             items.append(item)
                         }
-
                     }
                     http.send()
                 }
-
             }
 
             ListModel {
                 id: items
             }
 
+            // Start a match or download a language
             delegate: Button {
                 width: parent.width
                 text: local ? name : qsTr("Download: ") + name
@@ -107,7 +147,7 @@ Item {
                         if (downloader.getState() === LanguageDownloader.Error)
                             text = qsTr("Error downloading: ") + name
                         else if (downloader.getState() === LanguageDownloader.Done)
-                            text = qsTr("Completed: ") + name
+                            text = qsTr("Downloaded: ") + name
                         else
                             text = qsTr("Downloading: ") + name
                     }
@@ -175,14 +215,6 @@ Item {
                 Layout.bottomMargin: 5
             }
 
-        }
-
-        Component.onCompleted: {
-            items.clear()
-            var languages = languageManager.languages();
-            for(var i = 0; i < languages.length; i++) {
-                items.append({name: languages[i], index: i, local: true, url: ""})
-            }
         }
     }
 
