@@ -99,8 +99,8 @@ Item {
                             return;
                         }
 
-                        downloadlanguagelist.enabled = true
-                        downloadlanguagelist.text = qsTr("Download more languages")
+                        downloadlanguagelist.visible = false
+                        text = qsTr("Download more languages")
 
                         var assets = http.response['assets']
 
@@ -112,17 +112,16 @@ Item {
                             var item = {name: name, url: download_url, local: false, index: -1}
                             items.append(item)
                         }
-
                     }
                     http.send()
                 }
-
             }
 
             ListModel {
                 id: items
             }
 
+            // Start a match or download a language
             delegate: Button {
                 width: parent.width
                 text: local ? name : qsTr("Download: ") + name
