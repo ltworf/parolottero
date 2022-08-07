@@ -65,12 +65,21 @@ Item {
             Component.onCompleted: refreshList()
 
             // Implement refresh when scrolling down
+            BusyIndicator {
+                anchors.top: parent.top
+                anchors.horizontalCenter: parent.horizontalCenter
+                visible: false
+                running: visible
+                id: spinner
+            }
             property variant yposflick
-            onFlickStarted: {
+            onMovementStarted: {
                 yposflick = atYBeginning
+                spinner.visible = true
             }
 
-            onFlickEnded: {
+            onMovementEnded: {
+                spinner.visible = false
                 if ( atYBeginning === yposflick ) {
                     yposflick = null
                     languageManager.rescan()
