@@ -53,6 +53,32 @@ Item {
                 horizontalAlignment: Text.AlignHCenter
             }
 
+            // Load list of languages
+            function refreshList() {
+                items.clear()
+                var languages = languageManager.languages();
+                for(var i = 0; i < languages.length; i++) {
+                    items.append({name: languages[i], index: i, local: true, url: ""})
+                }
+            }
+
+            Component.onCompleted: refreshList()
+
+            // Implement refresh when scrolling down
+            property variant yposflick
+            onFlickStarted: {
+                yposflick = atYBeginning
+            }
+
+            onFlickEnded: {
+                if ( atYBeginning === yposflick ) {
+                    yposflick = null
+                    languageManager.rescan()
+                    refreshList()
+                }
+            }
+
+            // Button to download language list
             footer: Button {
                 width: parent.width / 2
                 text: qsTr("Download more languages")
@@ -176,14 +202,6 @@ Item {
                 Layout.bottomMargin: 5
             }
 
-        }
-
-        Component.onCompleted: {
-            items.clear()
-            var languages = languageManager.languages();
-            for(var i = 0; i < languages.length; i++) {
-                items.append({name: languages[i], index: i, local: true, url: ""})
-            }
         }
     }
 
