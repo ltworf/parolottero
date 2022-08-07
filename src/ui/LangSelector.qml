@@ -44,8 +44,6 @@ Item {
 
             model: items
 
-            ScrollBar.vertical: ScrollBar { }
-
             header: Label {
                 font.pointSize: 25
                 text: qsTr("Pick a language")
@@ -65,26 +63,25 @@ Item {
             Component.onCompleted: refreshList()
 
             // Implement refresh when scrolling down
+            property bool negativescroll: scrollbar.position < 0
+            onNegativescrollChanged: {
+                if (spinner.visible) {
+                    languageManager.rescan()
+                    refreshList()
+                }
+                spinner.visible = !spinner.visible
+            }
+
+            ScrollBar.vertical: ScrollBar {
+                id: scrollbar
+            }
+
             BusyIndicator {
                 anchors.top: parent.top
                 anchors.horizontalCenter: parent.horizontalCenter
                 visible: false
                 running: visible
                 id: spinner
-            }
-            property variant yposflick
-            onMovementStarted: {
-                yposflick = atYBeginning
-                spinner.visible = true
-            }
-
-            onMovementEnded: {
-                spinner.visible = false
-                if ( atYBeginning === yposflick ) {
-                    yposflick = null
-                    languageManager.rescan()
-                    refreshList()
-                }
             }
 
             // Button to download language list
