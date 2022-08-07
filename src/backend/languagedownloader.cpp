@@ -31,8 +31,6 @@ void LanguageDownloader::download(QString urlstring) {
     request.setMaximumRedirectsAllowed(5);
     this->change_state(LanguageDownloader::DownloadState::DownloadingWordlist);
     this->nam.get(request);
-
-    qDebug() << "downloading" << wordlist;
 }
 
 LanguageDownloader::LanguageDownloader(QObject *parent) : QObject(parent) {
@@ -50,6 +48,7 @@ LanguageDownloader::LanguageDownloader(QObject *parent) : QObject(parent) {
 void LanguageDownloader::finished(QNetworkReply* reply) {
     if (reply->error() != QNetworkReply::NoError) {
         this->change_state(LanguageDownloader::DownloadState::Error);
+        reply->deleteLater();
         return;
     }
 
@@ -59,10 +58,12 @@ void LanguageDownloader::finished(QNetworkReply* reply) {
         qDebug() << "follow redirect";
         request.setMaximumRedirectsAllowed(5);
         this->nam.get(request);
+        reply->deleteLater();
         return;
     } else if (reply->hasRawHeader("Location") && this->hops == 0) {
         this->change_state(LanguageDownloader::DownloadState::Error);
         qDebug() << "Exceeded hops";
+        reply->deleteLater();
         return;
     }
 
@@ -83,11 +84,13 @@ void LanguageDownloader::finished(QNetworkReply* reply) {
     if (data.length() == 0) {
         qDebug() << "File is empty";
         this->change_state(LanguageDownloader::DownloadState::Error);
+        reply->deleteLater();
         return;
     }
 
     dest.write(data);
     dest.close();
+    reply->deleteLater();
 
     if (this->state == LanguageDownloader::DownloadState::DownloadingWordlist) {
         this->change_state(LanguageDownloader::DownloadState::DownloadingLanguage);
