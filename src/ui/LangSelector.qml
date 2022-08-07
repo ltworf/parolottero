@@ -138,7 +138,7 @@ Item {
             // Start a match or download a language
             delegate: Button {
                 width: parent.width
-                text: local ? name : qsTr("Download: ") + name
+                text: local ? name : qsTr("Download: %1").arg(name)
                 enabled: downloader.state === LanguageDownloader.Idle
                 Rectangle {
                     visible: downloader.state === LanguageDownloader.Error || downloader.state === LanguageDownloader.Done
@@ -161,12 +161,12 @@ Item {
                     onStateChanged: {
                         if (downloader.getState() === LanguageDownloader.Error) {
                             downloadspinner.visible = false
-                            text = qsTr("Error downloading: ") + name
+                            text = qsTr("Error downloading: %1").arg(name)
                         } else if (downloader.getState() === LanguageDownloader.Done) {
-                            text = qsTr("Downloaded: ") + name
+                            text = qsTr("Downloaded: %1").arg(name)
                             downloadspinner.visible = false
                         } else {
-                            text = qsTr("Downloading: ") + name
+                            text = qsTr("Downloading: %1").arg(name)
                             downloadspinner.visible = true
                         }
                     }
