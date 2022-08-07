@@ -138,6 +138,7 @@ Item {
             Layout.fillHeight: true
             Layout.fillWidth: true
             Layout.margins: 5
+            clip: true
 
             ScrollBar.vertical: ScrollBar { }
 
