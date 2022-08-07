@@ -101,7 +101,17 @@ Item {
                 text: local ? name : qsTr("Download: ") + name
                 enabled: downloader.state === LanguageDownloader.Idle
 
-                LanguageDownloader {id: downloader}
+                LanguageDownloader {
+                    id: downloader
+                    onStateChanged: {
+                        if (downloader.getState() === LanguageDownloader.Error)
+                            text = qsTr("Error downloading: ") + name
+                        else if (downloader.getState() === LanguageDownloader.Done)
+                            text = qsTr("Completed: ") + name
+                        else
+                            text = qsTr("Downloading: ") + name
+                    }
+                }
                 onClicked: {
                     if (local)
                         language_index = index
