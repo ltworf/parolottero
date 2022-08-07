@@ -92,6 +92,14 @@ Item {
                 onClicked: {
                     downloadlanguagelist.enabled = false
                     downloadlanguagelist.text = qsTr("Downloading…")
+
+                    // Remove previous download buttons
+                    for (var i = items.count - 1; i >= 0; i--) {
+                        if (!items.get(i).local)
+                            items.remove(i, 1)
+                    }
+
+                    // Prepare http request
                     var http = new XMLHttpRequest()
                     http.responseType = "json"
                     var url = "https://api.github.com/repos/ltworf/parolottero-languages/releases/latest"
@@ -105,7 +113,7 @@ Item {
                             return;
                         }
 
-                        downloadlanguagelist.visible = false
+                        downloadlanguagelist.enabled = true
                         text = qsTr("Download more languages")
 
                         var assets = http.response['assets']
