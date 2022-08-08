@@ -16,15 +16,18 @@
 #
 # author Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
 
-QT += core gui network
-
-greaterThan(QT_MAJOR_VERSION, 4): QT += quick
+QT += core gui network quick
 
 CONFIG += c++11
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
+
+CHANGELOG = $$cat(../CHANGELOG, lines)
+VERSION = $$first(CHANGELOG)
+message($$VERSION)
+DEFINES += "VERSION=\\\"$$VERSION\\\""
 
 SOURCES += \
     backend/boardmanager.cpp \

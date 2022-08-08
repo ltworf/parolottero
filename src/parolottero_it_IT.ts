@@ -4,22 +4,27 @@
 <context>
     <name>About</name>
     <message>
-        <location filename="ui/About.qml" line="35"/>
+        <location filename="ui/About.qml" line="39"/>
         <source>Parolottero</source>
         <translation>Parolottero</translation>
     </message>
     <message>
-        <location filename="ui/About.qml" line="42"/>
+        <location filename="ui/About.qml" line="46"/>
+        <source>Version: %1</source>
+        <translation>Versione: %1</translation>
+    </message>
+    <message>
+        <location filename="ui/About.qml" line="52"/>
         <source>Released under AGPL-3</source>
         <translation>Rilasciato sotto AGPL-3</translation>
     </message>
     <message>
-        <location filename="ui/About.qml" line="55"/>
+        <location filename="ui/About.qml" line="65"/>
         <source>&lt;a href=&quot;https://github.com/ltworf/parolottero&quot;&gt;Website&lt;/a&gt;</source>
         <translation>&lt;a href=&quot;https://github.com/ltworf/parolottero&quot;&gt;Sito web&lt;/a&gt;</translation>
     </message>
     <message>
-        <location filename="ui/About.qml" line="61"/>
+        <location filename="ui/About.qml" line="71"/>
         <source>Done</source>
         <translation>Fatto</translation>
     </message>

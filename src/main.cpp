@@ -1,6 +1,6 @@
 /*
 parolottero
-Copyright (C) 2021 Salvo "LtWorf" Tomaselli
+Copyright (C) 2021-2022 Salvo "LtWorf" Tomaselli
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as
@@ -24,6 +24,7 @@ author Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
 
 #include <QLocale>
 #include <QTranslator>
+#include <QString>
 
 #include "backend/languagemanager.h"
 #include "backend/boardmanager.h"
@@ -59,7 +60,9 @@ int main(int argc, char *argv[])
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
     LanguageManager language_manager(&engine);
+    QString version = QString(VERSION);
     engine.rootContext()->setContextProperty("languageManager", &language_manager);
+    engine.rootContext()->setContextProperty("ApplicationVersion", version);
     qmlRegisterType<BoardManager>("ltworf.parolottero", 1, 0, "BoardManager");
     qmlRegisterType<LanguageDownloader>("ltworf.parolottero", 1, 0, "LanguageDownloader");
 

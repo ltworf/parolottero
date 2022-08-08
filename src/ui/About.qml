@@ -24,6 +24,10 @@ import QtQuick.Layouts 1.12
 
 GradientRect {
 
+    MouseArea {
+        anchors.fill: parent
+    }
+
     ColumnLayout {
         anchors.fill: parent
         spacing: 20
@@ -35,6 +39,12 @@ GradientRect {
             text: qsTr("Parolottero")
             Layout.fillWidth: true
             horizontalAlignment: Text.AlignHCenter
+        }
+
+        Label {
+            font.pointSize: 15
+            text: qsTr("Version: %1").arg(ApplicationVersion)
+            Layout.margins: 10
         }
 
         Label {
