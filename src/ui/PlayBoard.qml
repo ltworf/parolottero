@@ -163,10 +163,11 @@ Item {
                 enabled: scores.incorrectwords
                 onClicked: {
                     var body = ""
+                    var itemcount = 0
+                    var language_name = languageManager.languages()[board.language]
 
                     for (var i = 0; i < scores.count; i++) {
                         var word = scores.get(i)
-                        console.log(word.points, word.word, word.incorrect)
                         if (!word.incorrect)
                             continue
 
@@ -174,6 +175,7 @@ Item {
                         var sign = word.points ? "-" : "+"
 
                         body += sign + word.word + "\n"
+                        itemcount++
                     }
                 }
             }
