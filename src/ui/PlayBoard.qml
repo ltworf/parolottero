@@ -186,6 +186,15 @@ Item {
                         body += sign + word.word + "\n"
                         itemcount++
                     }
+
+                    body += "\nid: " + MachineId
+                    body += "\nLanguage: " + language_name
+                    body += "\nItem count: " + itemcount
+                    var title = "User report for " + language_name
+                    var labels = [language_name, MachineId]
+
+                    var postdata = {"body": body, "title": title, "labels": labels}
+
                 }
             }
 
