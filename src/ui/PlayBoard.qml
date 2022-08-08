@@ -161,6 +161,21 @@ Item {
                 width: parent.width
                 text: qsTr("Report wrong words")
                 enabled: scores.incorrectwords
+                onClicked: {
+                    var body = ""
+
+                    for (var i = 0; i < scores.count; i++) {
+                        var word = scores.get(i)
+                        console.log(word.points, word.word, word.incorrect)
+                        if (!word.incorrect)
+                            continue
+
+                        // should the word be added or removed?
+                        var sign = word.points ? "-" : "+"
+
+                        body += sign + word.word + "\n"
+                    }
+                }
             }
 
             delegate: RowLayout {
