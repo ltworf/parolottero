@@ -21,6 +21,7 @@ author Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
 import QtQuick 2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Controls 2.15
+import Qt.labs.settings 1.1
 
 import ltworf.parolottero 1.0
 
@@ -148,6 +149,13 @@ Item {
             Layout.margins: 5
             clip: true
 
+            Settings {
+                id: bugreportsettings
+                category: "BugReporting"
+                property bool enablebugreport: false
+                property string githubtoken: "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"
+            }
+
             ScrollBar.vertical: ScrollBar { }
 
             model: scores
@@ -158,6 +166,7 @@ Item {
             }
 
             footer: Button {
+                visible: bugreportsettings.enablebugreport
                 width: parent.width
                 text: qsTr("Report wrong words")
                 enabled: scores.incorrectwords
@@ -195,6 +204,7 @@ Item {
                     Layout.fillWidth: true
                 }
                 RoundButton {
+                    visible: bugreportsettings.enablebugreport
                     text: checked ? "❌": "✔️"
                     Layout.alignment: Layout.Right
                     checkable: true
