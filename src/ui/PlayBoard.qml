@@ -94,6 +94,7 @@ Item {
                     // Update the scoreboard just if we are about to show it
                     if (!scoreboard.visible) {
                         scores.clear()
+                        scores.incorrectwords = 0
                         for (var i=0; i < board.scoreboard.size; i++) {
                             scores.append(
                                 {
@@ -103,7 +104,6 @@ Item {
                                 }
                             )
                         }
-                        scores.correctwords = scores.count
                     }
                     grid.visible = ! grid.visible
                     scoreboard.visible = ! scoreboard.visible
@@ -153,14 +153,13 @@ Item {
 
             ListModel {
                 id: scores
-                property int correctwords: 0
-                onCorrectwordsChanged: console.log(correctwords, scores.count)
+                property int incorrectwords: 0
             }
 
             footer: Button {
                 width: parent.width
                 text: qsTr("Report wrong words")
-                enabled: scores.correctwords != scores.count
+                enabled: scores.incorrectwords
             }
 
             delegate: RowLayout {
@@ -178,15 +177,15 @@ Item {
                     Layout.fillWidth: true
                 }
                 RoundButton {
-                    text: "OK"
+                    text: checked ? "❌": "✔️"
                     Layout.alignment: Layout.Right
                     checkable: true
-                    checked: correct
+                    checked: incorrect
                     onClicked: {
                         if (checked)
-                            scores.correctwords++
+                            scores.incorrectwords++
                         else
-                            scores.correctwords--
+                            scores.incorrectwords--
                     }
                 }
             }
