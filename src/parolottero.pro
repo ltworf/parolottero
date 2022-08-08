@@ -16,9 +16,7 @@
 #
 # author Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
 
-QT += core gui network
-
-greaterThan(QT_MAJOR_VERSION, 4): QT += quick
+QT += core gui network quick
 
 CONFIG += c++11
 
