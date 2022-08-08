@@ -154,6 +154,7 @@ Item {
                 category: "BugReporting"
                 property bool enablebugreport: false
                 property string githubtoken: "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"
+                property string issuesurl: "https://api.github.com/repos/ltworf/parolottero-languages/issues"
             }
 
             ScrollBar.vertical: ScrollBar { }
@@ -165,36 +166,69 @@ Item {
                 property int incorrectwords: 0
             }
 
-            footer: Button {
-                visible: bugreportsettings.enablebugreport
-                width: parent.width
-                text: qsTr("Report wrong words")
-                enabled: scores.incorrectwords
-                onClicked: {
-                    var body = ""
-                    var itemcount = 0
-                    var language_name = languageManager.languages()[board.language]
+            footer: ColumnLayout {
+                Label {
+                    visible: false
+                    text: qsTr("Sending bugreport…")
+                    id: bugreportlabel
+                    onLinkActivated:Qt.openUrlExternally(link);
+                }
+                Button {
+                    id: bugreportbutton
+                    visible: bugreportsettings.enablebugreport
+                    width: parent.width
+                    text: qsTr("Report wrong words")
+                    enabled: scores.incorrectwords
+                    onClicked: {
+                        visible = false
+                        bugreportlabel.visible = true
+                        var body = ""
+                        var itemcount = 0
+                        var language_name = languageManager.languages()[board.language]
 
-                    for (var i = 0; i < scores.count; i++) {
-                        var word = scores.get(i)
-                        if (!word.incorrect)
-                            continue
+                        for (var i = 0; i < scores.count; i++) {
+                            var word = scores.get(i)
+                            if (!word.incorrect)
+                                continue
 
-                        // should the word be added or removed?
-                        var sign = word.points ? "-" : "+"
+                            // should the word be added or removed?
+                            var sign = word.points ? "-" : "+"
 
-                        body += sign + word.word + "\n"
-                        itemcount++
+                            body += sign + word.word + "\n"
+                            itemcount++
+                        }
+
+                        body += "\nid: " + MachineId
+                        body += "\nLanguage: " + language_name
+                        body += "\nItem count: " + itemcount
+                        var title = "User report for " + language_name
+                        var labels = [language_name, MachineId]
+
+                        var postdata = {"body": body, "title": title, "labels": labels}
+
+                        // Do the HTTP request
+                        var http = new XMLHttpRequest()
+                        http.responseType = "json"
+                        http.open("POST", bugreportsettings.issuesurl);
+                        http.setRequestHeader("Accept", "application/vnd.github+json")
+                        http.setRequestHeader("Authorization", "token " + bugreportsettings.githubtoken)
+
+                        http.onreadystatechange = function() {
+                            if (http.readyState !== XMLHttpRequest.DONE) return;
+
+                            // Error
+                            if (http.status !== 201) {
+                                bugreportlabel.text = qsTr("Unable to create bugreport")
+                                return
+                            }
+
+                            var issue = http.response['html_url']
+
+                            bugreportlabel.text =qsTr('<a href="%1">Open in browser</a>').arg(issue)
+                        }
+
+                        http.send(JSON.stringify(postdata));
                     }
-
-                    body += "\nid: " + MachineId
-                    body += "\nLanguage: " + language_name
-                    body += "\nItem count: " + itemcount
-                    var title = "User report for " + language_name
-                    var labels = [language_name, MachineId]
-
-                    var postdata = {"body": body, "title": title, "labels": labels}
-
                 }
             }
 
