@@ -39,6 +39,12 @@ GradientRect {
 
         Label {
             font.pointSize: 15
+            text: qsTr("Version: %1").arg(ApplicationVersion)
+            Layout.margins: 10
+        }
+
+        Label {
+            font.pointSize: 15
             text: qsTr("Released under AGPL-3")
             Layout.margins: 10
         }
