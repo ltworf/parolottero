@@ -95,8 +95,15 @@ Item {
                     if (!scoreboard.visible) {
                         scores.clear()
                         for (var i=0; i < board.scoreboard.size; i++) {
-                            scores.append({word: board.scoreboard.get_word(i), points: board.scoreboard.get_points(i)})
+                            scores.append(
+                                {
+                                    word: board.scoreboard.get_word(i),
+                                    points: board.scoreboard.get_points(i),
+                                    correct: true,
+                                }
+                            )
                         }
+                        scores.correctwords = scores.count
                     }
                     grid.visible = ! grid.visible
                     scoreboard.visible = ! scoreboard.visible
@@ -146,9 +153,18 @@ Item {
 
             ListModel {
                 id: scores
+                property int correctwords: 0
+                onCorrectwordsChanged: console.log(correctwords, scores.count)
+            }
+
+            footer: Button {
+                width: parent.width
+                text: qsTr("Report wrong words")
+                enabled: scores.correctwords != scores.count
             }
 
             delegate: RowLayout {
+                width: parent.width
                 Label {
                     text: points
                     color: points ? "green": "red"
@@ -159,6 +175,19 @@ Item {
                     color: points ? "green": "red"
                     width: height * 2
                     font.pointSize: 24
+                    Layout.fillWidth: true
+                }
+                RoundButton {
+                    text: "OK"
+                    Layout.alignment: Layout.Right
+                    checkable: true
+                    checked: correct
+                    onClicked: {
+                        if (checked)
+                            scores.correctwords++
+                        else
+                            scores.correctwords--
+                    }
                 }
             }
         }
