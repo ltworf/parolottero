@@ -24,6 +24,10 @@ import QtQuick.Layouts 1.12
 
 GradientRect {
 
+    MouseArea {
+        anchors.fill: parent
+    }
+
     ColumnLayout {
         anchors.fill: parent
         spacing: 20
