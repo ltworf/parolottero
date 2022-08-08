@@ -100,7 +100,8 @@ Item {
                                 {
                                     word: board.scoreboard.get_word(i),
                                     points: board.scoreboard.get_points(i),
-                                    correct: true,
+                                    incorrect: false,
+                                    index: i
                                 }
                             )
                         }
@@ -186,6 +187,7 @@ Item {
                             scores.incorrectwords++
                         else
                             scores.incorrectwords--
+                        scores.get(index).incorrect = checked
                     }
                 }
             }
