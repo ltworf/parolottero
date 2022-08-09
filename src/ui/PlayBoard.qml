@@ -148,6 +148,7 @@ Item {
             Layout.fillWidth: true
             Layout.margins: 5
             clip: true
+            property bool bugreportsent: false
 
             Settings {
                 id: bugreportsettings
@@ -166,22 +167,27 @@ Item {
                 property int incorrectwords: 0
             }
 
+            onVisibleChanged: {
+                bugreportsent = false
+            }
+
             footer: ColumnLayout {
+                width: parent.width
+
                 Label {
-                    visible: false
-                    text: qsTr("Sending bugreport…")
+                    visible: scoreboard.bugreportsent
+                    onVisibleChanged: text = qsTr("Sending bugreport…")
                     id: bugreportlabel
                     onLinkActivated:Qt.openUrlExternally(link);
                 }
                 Button {
                     id: bugreportbutton
-                    visible: bugreportsettings.enablebugreport
+                    visible: bugreportsettings.enablebugreport && ! scoreboard.bugreportsent
                     width: parent.width
                     text: qsTr("Report wrong words")
                     enabled: scores.incorrectwords
                     onClicked: {
-                        visible = false
-                        bugreportlabel.visible = true
+                        scoreboard.bugreportsent = true
                         var body = ""
                         var itemcount = 0
                         var language_name = languageManager.languages()[board.language]
