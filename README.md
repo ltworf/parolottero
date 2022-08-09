@@ -50,3 +50,5 @@ Contributing
 ------------
 
 Contributions are welcome both via git send mail to tiposchi@tiscali.it or github pull requests.
+
+To report bugs on words you can enable bug reporting. Edit `~/.config/Parolottero/Parolottero.conf` and enable. You should use your own github token rather than the provided one.
