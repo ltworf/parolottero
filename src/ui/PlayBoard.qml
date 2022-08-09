@@ -21,6 +21,7 @@ author Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
 import QtQuick 2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Controls 2.15
+import Qt.labs.settings 1.1
 
 import ltworf.parolottero 1.0
 
@@ -94,8 +95,16 @@ Item {
                     // Update the scoreboard just if we are about to show it
                     if (!scoreboard.visible) {
                         scores.clear()
+                        scores.incorrectwords = 0
                         for (var i=0; i < board.scoreboard.size; i++) {
-                            scores.append({word: board.scoreboard.get_word(i), points: board.scoreboard.get_points(i)})
+                            scores.append(
+                                {
+                                    word: board.scoreboard.get_word(i),
+                                    points: board.scoreboard.get_points(i),
+                                    incorrect: false,
+                                    index: i
+                                }
+                            )
                         }
                     }
                     grid.visible = ! grid.visible
@@ -139,6 +148,15 @@ Item {
             Layout.fillWidth: true
             Layout.margins: 5
             clip: true
+            property bool bugreportsent: false
+
+            Settings {
+                id: bugreportsettings
+                category: "BugReporting"
+                property bool enablebugreport: false
+                property string githubtoken: "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"
+                property string issuesurl: "https://api.github.com/repos/ltworf/parolottero-languages/issues"
+            }
 
             ScrollBar.vertical: ScrollBar { }
 
@@ -146,9 +164,82 @@ Item {
 
             ListModel {
                 id: scores
+                property int incorrectwords: 0
+            }
+
+            onVisibleChanged: {
+                bugreportsent = false
+            }
+
+            footer: ColumnLayout {
+                width: parent.width
+
+                Label {
+                    visible: scoreboard.bugreportsent
+                    onVisibleChanged: text = qsTr("Sending bugreport…")
+                    id: bugreportlabel
+                    onLinkActivated:Qt.openUrlExternally(link);
+                }
+                Button {
+                    id: bugreportbutton
+                    visible: bugreportsettings.enablebugreport && ! scoreboard.bugreportsent
+                    width: parent.width
+                    text: qsTr("Report wrong words")
+                    enabled: scores.incorrectwords
+                    onClicked: {
+                        scoreboard.bugreportsent = true
+                        var body = ""
+                        var itemcount = 0
+                        var language_name = languageManager.languages()[board.language]
+
+                        for (var i = 0; i < scores.count; i++) {
+                            var word = scores.get(i)
+                            if (!word.incorrect)
+                                continue
+
+                            // should the word be added or removed?
+                            var sign = word.points ? "-" : "+"
+
+                            body += sign + word.word + "\n"
+                            itemcount++
+                        }
+
+                        body += "\nid: " + MachineId
+                        body += "\nLanguage: " + language_name
+                        body += "\nItem count: " + itemcount
+                        var title = "User report for " + language_name
+                        var labels = [language_name, MachineId]
+
+                        var postdata = {"body": body, "title": title, "labels": labels}
+
+                        // Do the HTTP request
+                        var http = new XMLHttpRequest()
+                        http.responseType = "json"
+                        http.open("POST", bugreportsettings.issuesurl);
+                        http.setRequestHeader("Accept", "application/vnd.github+json")
+                        http.setRequestHeader("Authorization", "token " + bugreportsettings.githubtoken)
+
+                        http.onreadystatechange = function() {
+                            if (http.readyState !== XMLHttpRequest.DONE) return;
+
+                            // Error
+                            if (http.status !== 201) {
+                                bugreportlabel.text = qsTr("Unable to create bugreport")
+                                return
+                            }
+
+                            var issue = http.response['html_url']
+
+                            bugreportlabel.text =qsTr('<a href="%1">Open in browser</a>').arg(issue)
+                        }
+
+                        http.send(JSON.stringify(postdata));
+                    }
+                }
             }
 
             delegate: RowLayout {
+                width: parent.width
                 Label {
                     text: points
                     color: points ? "green": "red"
@@ -159,6 +250,21 @@ Item {
                     color: points ? "green": "red"
                     width: height * 2
                     font.pointSize: 24
+                    Layout.fillWidth: true
+                }
+                RoundButton {
+                    visible: bugreportsettings.enablebugreport
+                    text: checked ? "❌": "✔️"
+                    Layout.alignment: Layout.Right
+                    checkable: true
+                    checked: incorrect
+                    onClicked: {
+                        if (checked)
+                            scores.incorrectwords++
+                        else
+                            scores.incorrectwords--
+                        scores.get(index).incorrect = checked
+                    }
                 }
             }
         }

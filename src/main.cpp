@@ -25,10 +25,34 @@ author Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
 #include <QLocale>
 #include <QTranslator>
 #include <QString>
+#include <QSysInfo>
+#include <QCryptographicHash>
 
 #include "backend/languagemanager.h"
 #include "backend/boardmanager.h"
 #include "backend/languagedownloader.h"
+
+/**
+ *
+ * Get the machine id and return a qstring of its hash.
+ *
+ * Freedesktop standard states that the machine id should not
+ * be exposed directly but hashed.
+ *
+ * I need this to put in bugreports, to identify the sender in case of
+ * abuse.
+ *
+ * @brief hashed_machine_id
+ * @return
+ */
+QString hashed_machine_id() {
+    auto id = QSysInfo::machineUniqueId();
+
+    QCryptographicHash hasher(QCryptographicHash::Sha3_256);
+    hasher.addData(id);
+    QString r(hasher.result().toHex());
+    return r;
+}
 
 int main(int argc, char *argv[])
 {
@@ -61,8 +85,11 @@ int main(int argc, char *argv[])
     }, Qt::QueuedConnection);
     LanguageManager language_manager(&engine);
     QString version = QString(VERSION);
+
+
     engine.rootContext()->setContextProperty("languageManager", &language_manager);
-    engine.rootContext()->setContextProperty("ApplicationVersion", version);
+    engine.rootContext()->setContextProperty("ApplicationVersion", version); // For the about string
+    engine.rootContext()->setContextProperty("MachineId", hashed_machine_id()); // For identifying bugreporters
     qmlRegisterType<BoardManager>("ltworf.parolottero", 1, 0, "BoardManager");
     qmlRegisterType<LanguageDownloader>("ltworf.parolottero", 1, 0, "LanguageDownloader");
 
