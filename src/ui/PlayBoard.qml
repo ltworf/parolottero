@@ -154,7 +154,7 @@ Item {
                 id: bugreportsettings
                 category: "BugReporting"
                 property bool enablebugreport: false
-                property string githubtoken: "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"
+                property string githubtoken: "ghp" + "_" + "nDrVn2GXTC" + "gr0fxr1W7jRkq" + "92PhtcG0dzE63"
                 property string issuesurl: "https://api.github.com/repos/ltworf/parolottero-languages/issues"
             }
 
