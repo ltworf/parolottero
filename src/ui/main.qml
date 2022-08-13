@@ -28,6 +28,8 @@ Window {
     visible: true
     title: qsTr("Parolottero")
     id: main_window
+    width: 400
+    height: 700
 
     LangSelector {
         id: language_selector
