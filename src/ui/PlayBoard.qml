@@ -314,7 +314,7 @@ Item {
                     anchors.fill: parent
                     hoverEnabled: true
 
-                    onPressed: {
+                    onPressed: (mouse)=> {
                         mouse.accepted = false;
 
                         if (board.seconds_left == 0)
@@ -332,7 +332,7 @@ Item {
                         mouse.accepted = true;
                     }
 
-                    onReleased: {
+                    onReleased: (mouse)=> {
                         mouse.accepted = board.seconds_left > 0;
                         for (var i = 0; i < board.size; i++) {
                             grid.itemAtIndex(i).used = false;
@@ -348,10 +348,10 @@ Item {
                         grid.currentIndex = -1;
                     }
 
-                    onPositionChanged : {
+                    onPositionChanged: (mouse)=> {
                         mouse.accepted = true;
 
-                        if (mouse.buttons == 0 || board.seconds_left == 0)
+                        if (mouse.buttons === 0 || board.seconds_left == 0)
                             return;
 
                         var index = find_item_index(mouse.x, mouse.y);
