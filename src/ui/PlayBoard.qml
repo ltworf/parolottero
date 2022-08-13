@@ -239,7 +239,7 @@ Item {
             }
 
             delegate: RowLayout {
-                width: parent.width
+                width: parent ? parent.width: 0
                 ThemedLabel {
                     text: points
                     color: points ? "green": "red"
