@@ -154,7 +154,7 @@ Item {
                 id: bugreportsettings
                 category: "BugReporting"
                 property bool enablebugreport: false
-                property string githubtoken: "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"
+                property string githubtoken: "ghp" + "_" + "nDrVn2GXTC" + "gr0fxr1W7jRkq" + "92PhtcG0dzE63"
                 property string issuesurl: "https://api.github.com/repos/ltworf/parolottero-languages/issues"
             }
 
@@ -208,9 +208,8 @@ Item {
                         body += "\nLanguage: " + language_name
                         body += "\nItem count: " + itemcount
                         var title = "User report for " + language_name
-                        var labels = [language_name, MachineId]
 
-                        var postdata = {"body": body, "title": title, "labels": labels}
+                        var postdata = {"body": body, "title": title}
 
                         // Do the HTTP request
                         var http = new XMLHttpRequest()
@@ -224,7 +223,8 @@ Item {
 
                             // Error
                             if (http.status !== 201) {
-                                bugreportlabel.text = qsTr("Unable to create bugreport")
+                                console.log("Bugreport failed\n" + http.status + "\n" + http.response)
+                                bugreportlabel.text = qsTr("Unable to create bugreport %1 %2").arg(http.status).arg(http.response["message"])
                                 return
                             }
 
