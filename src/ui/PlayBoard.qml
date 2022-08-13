@@ -132,7 +132,7 @@ Item {
             }
         }
 
-        Label {
+        ThemedLabel {
             text: board.last_word
             color: board.last_score ? "green" : "red"
             font.pointSize: 30
@@ -174,7 +174,7 @@ Item {
             footer: ColumnLayout {
                 width: parent.width
 
-                Label {
+                ThemedLabel {
                     visible: scoreboard.bugreportsent
                     onVisibleChanged: text = qsTr("Sending bugreport…")
                     id: bugreportlabel
@@ -240,12 +240,12 @@ Item {
 
             delegate: RowLayout {
                 width: parent.width
-                Label {
+                ThemedLabel {
                     text: points
                     color: points ? "green": "red"
                     font.pointSize: 24
                 }
-                Label {
+                ThemedLabel {
                     text: word
                     color: points ? "green": "red"
                     width: height * 2
@@ -381,7 +381,7 @@ Item {
             id: footer
             width: parent.width
 
-            Label {
+            ThemedLabel {
                 text: qsTr("Total: ") + board.total
                 font.pointSize: 30
             }

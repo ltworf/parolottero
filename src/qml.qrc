@@ -6,5 +6,6 @@
         <file>ui/LangSelector.qml</file>
         <file>ui/PlayBoard.qml</file>
         <file>ui/LetterCell.qml</file>
+        <file>ui/ThemedLabel.qml</file>
     </qresource>
 </RCC>

@@ -34,33 +34,33 @@ GradientRect {
 
         Item {Layout.fillHeight: true}
 
-        Label {
+        ThemedLabel {
             font.pointSize: 30
             text: qsTr("Parolottero")
             Layout.fillWidth: true
             horizontalAlignment: Text.AlignHCenter
         }
 
-        Label {
+        ThemedLabel {
             font.pointSize: 15
             text: qsTr("Version: %1").arg(ApplicationVersion)
             Layout.margins: 10
         }
 
-        Label {
+        ThemedLabel {
             font.pointSize: 15
             text: qsTr("Released under AGPL-3")
             Layout.margins: 10
         }
 
-        Label {
+        ThemedLabel {
             font.pointSize: 10
             text: '© 2021-2022 Salvo "LtWorf" Tomaselli <br>&lt;<a href="mailto:tiposchi@tiscali.it">tiposchi@tiscali.it</a>&gt;'
             Layout.margins: 5
             onLinkActivated:Qt.openUrlExternally(link);
         }
 
-        Label {
+        ThemedLabel {
             font.pointSize: 15
             text: qsTr('<a href="https://github.com/ltworf/parolottero">Website</a>')
             Layout.margins: 10

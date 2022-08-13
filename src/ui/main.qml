@@ -29,6 +29,11 @@ Window {
     title: qsTr("Parolottero")
     id: main_window
 
+    SystemPalette {
+        id: palette
+    }
+    color: palette.base
+
     LangSelector {
         id: language_selector
         anchors.fill: parent

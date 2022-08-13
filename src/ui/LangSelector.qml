@@ -44,7 +44,7 @@ Item {
 
             model: items
 
-            header: Label {
+            header: ThemedLabel {
                 font.pointSize: 25
                 text: qsTr("Pick a language")
                 width: parent.width
@@ -195,7 +195,7 @@ Item {
                 id: switchseed
             }
 
-            Label {
+            ThemedLabel {
                 text: qsTr("Seed")
                 Layout.fillWidth: true
                 Layout.leftMargin: 5
@@ -210,7 +210,7 @@ Item {
                 Layout.rightMargin: 5
             }
 
-            Label {
+            ThemedLabel {
                 text: qsTr("Duration")
                 Layout.fillWidth: true
                 Layout.leftMargin: 5

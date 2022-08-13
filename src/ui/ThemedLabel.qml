@@ -1,6 +1,6 @@
 /*
 parolottero
-Copyright (C) 2021-2022 Salvo "LtWorf" Tomaselli
+Copyright (C) 2022 Salvo "LtWorf" Tomaselli
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as
@@ -19,23 +19,12 @@ author Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
 */
 
 import QtQuick 2.15
-import QtQuick.Window 2.15
-import Qt.labs.settings 1.1
 import QtQuick.Controls 2.15
 
-/*
- * Faded transparent rectangle that goes on top of stuff
- */
-Rectangle {
-    gradient: Gradient {
-        GradientStop { position: 0.0; color: palette.base }
-        GradientStop { position: 0.2; color: "#994682B4" }
-        GradientStop { position: 0.8; color: "#AAAAAAAA" }
-        GradientStop { position: 1.0; color: palette.base }
-    }
 
+Label {
     SystemPalette {
         id: palette
     }
-    z: 1
+    color: palette.text
 }
