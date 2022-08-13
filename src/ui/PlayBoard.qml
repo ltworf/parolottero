@@ -208,9 +208,8 @@ Item {
                         body += "\nLanguage: " + language_name
                         body += "\nItem count: " + itemcount
                         var title = "User report for " + language_name
-                        var labels = [language_name, MachineId]
 
-                        var postdata = {"body": body, "title": title, "labels": labels}
+                        var postdata = {"body": body, "title": title}
 
                         // Do the HTTP request
                         var http = new XMLHttpRequest()
