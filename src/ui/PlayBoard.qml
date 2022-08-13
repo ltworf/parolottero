@@ -224,7 +224,8 @@ Item {
 
                             // Error
                             if (http.status !== 201) {
-                                bugreportlabel.text = qsTr("Unable to create bugreport")
+                                console.log("Bugreport failed\n" + http.status + "\n" + http.response)
+                                bugreportlabel.text = qsTr("Unable to create bugreport %1 %2").arg(http.status).arg(http.response["message"])
                                 return
                             }
 
