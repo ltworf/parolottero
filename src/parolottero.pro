@@ -73,13 +73,7 @@ INSTALLS += manpage
 export(INSTALLS)
 
 DISTFILES += \
-    ui/GradientRect.qml \
-    ui/About.qml \
-    ui/LangSelector.qml \
-    ui/LetterCell.qml \
-    ui/PlayBoard.qml \
-    ui/main.qml \
-    ui/main_copy.qml \
+    ui/*.qml \
     extras*
 
 RESOURCES += qml.qrc
