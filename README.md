@@ -21,10 +21,7 @@ Playing
 Installing
 ----------
 
-The preferred mode is to install the .deb files.
-
-There is one which contains the game code and data packages which contain the languages.
-
+The preferred mode is to install the .deb file.
 
 Building
 --------
