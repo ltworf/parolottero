@@ -96,17 +96,37 @@
 <context>
     <name>PlayBoard</name>
     <message>
-        <location filename="ui/PlayBoard.qml" line="77"/>
+        <location filename="ui/PlayBoard.qml" line="78"/>
         <source>←</source>
         <translation>←</translation>
     </message>
     <message>
-        <location filename="ui/PlayBoard.qml" line="90"/>
+        <location filename="ui/PlayBoard.qml" line="91"/>
         <source>Scores</source>
         <translation>Punteggio</translation>
     </message>
     <message>
-        <location filename="ui/PlayBoard.qml" line="279"/>
+        <location filename="ui/PlayBoard.qml" line="179"/>
+        <source>Sending bugreport…</source>
+        <translation>Invio segnalazione di errore…</translation>
+    </message>
+    <message>
+        <location filename="ui/PlayBoard.qml" line="187"/>
+        <source>Report wrong words</source>
+        <translation>Segnala parole incorrette</translation>
+    </message>
+    <message>
+        <location filename="ui/PlayBoard.qml" line="227"/>
+        <source>Unable to create bugreport %1 %2</source>
+        <translation>Impossibile creare segnalazione %1 %2</translation>
+    </message>
+    <message>
+        <location filename="ui/PlayBoard.qml" line="233"/>
+        <source>&lt;a href=&quot;%1&quot;&gt;Open in browser&lt;/a&gt;</source>
+        <translation>&lt;a href=&quot;%1&quot;&gt;Apri nel browser&lt;/a&gt;</translation>
+    </message>
+    <message>
+        <location filename="ui/PlayBoard.qml" line="385"/>
         <source>Total: </source>
         <translation>Totale: </translation>
     </message>
