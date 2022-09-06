@@ -186,12 +186,14 @@ Item {
             Layout.alignment: Qt.AlignBottom
             columns: 2
 
-            Switch {
-                Layout.columnSpan: 2
-                Layout.fillWidth: true
-                Layout.rightMargin: 5
-                LayoutMirroring.enabled: true
+            ThemedLabel {
                 text: qsTr("User defined seed")
+                Layout.fillWidth: true
+                Layout.leftMargin: 5
+            }
+
+            Switch {
+                Layout.rightMargin: 5
                 id: switchseed
             }
 
